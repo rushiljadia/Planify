@@ -18,6 +18,20 @@
       href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
       rel="stylesheet"
     />
+    <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js"></script>
+    <link
+      href="https://api.tiles.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css"
+      rel="stylesheet"
+    />
+    <style>
+      #map {
+        height: 600px;
+      }
+
+      #instructions {
+        height: 300px;
+      }
+    </style>
     <title>{% block title %}Home{% endblock %}</title>
   </head>
   <body>
@@ -95,6 +109,7 @@
     <!---->
     {% endwith %}
     <!---->
+
     <div class="container">{% block content %}{% endblock %}</div>
     <!-- Bootstrap JS CDN -->
     <section class="">
