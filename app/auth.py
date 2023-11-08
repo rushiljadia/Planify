@@ -30,7 +30,6 @@ def sign_up():
         elif len(password) < 7:
             flash("Password must be at least 7 characters", category="error")
         else:
-            # add to database
             flash("Account created successfully!", category="success")
 
     return render_template("sign_up.html")
