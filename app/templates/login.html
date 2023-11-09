@@ -6,28 +6,18 @@
 <!-- Content -->
 {% block content %}
 <form method="POST">
-  <h3 align="center">Login</h3>
-  <div class="form-group">
-    <label for="email">Email Address</label>
-    <input
-      type="email"
-      class="form-control"
-      id="email"
-      name="email"
-      placeholder="johndoe@planify.com"
-    />
-  </div>
-  <div class="form-group">
-    <label for="password">Password</label>
-    <input
-      type="password"
-      class="form-control"
-      id="password"
-      name="password"
-      placeholder="Password"
-    />
-  </div>
+  {{ form.hidden_tag() }}
+  <!-- Username Label -->
+  {{ form.username.label(class="form-label") }}
+  <!-- Form Username Box -->
+  {{ form.username(class="form-control") }}
   <br />
-  <button type="submit" class="btn btn-primary">Login</button>
+  <!-- Password Label -->
+  {{ form.password_hash.label(class="form-label") }}
+  <!-- Form Password Box -->
+  {{ form.password_hash(class="form-control") }}
+  <br />
+  <!-- Form Submit -->
+  {{ form.submit(class="btn btn-primary") }}
 </form>
 {% endblock %}
