@@ -27,7 +27,7 @@ def login():
         user = Users.query.filter_by(username=form.username.data).first()
         if user:
             # Check Hash
-            if check_password_hash(user.password, form.password.data):
+            if check_password_hash(user.password_hash, form.password.data):
                 login_user(user)
                 flash("Login Successful")
                 return redirect(url_for("dashboard"))
