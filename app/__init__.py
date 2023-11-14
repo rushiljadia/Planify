@@ -1,11 +1,10 @@
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from config import Config
 from flask_login import LoginManager
+from .extensions import db
 
 # Globally accessable libraries
-db = SQLAlchemy()
 migrate = Migrate()
 login_manager = LoginManager()
 
@@ -18,7 +17,6 @@ def create_app():
     db.init_app(app)
     migrate.init_app(app, db)
     login_manager.init_app(app)
-    login_manager.login_view = "login"
 
     # register blueprints
     with app.app_context():
