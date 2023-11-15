@@ -6,5 +6,26 @@
 <!-- Content -->
 {% block content %}
 
-<h1>Home</h1>
+<!-- Action section -->
+<section
+  class="h-100 d-flex flex-column align-items-center justify-content-center"
+>
+  <h1 class="text-center">Welcome</h1>
+  <div
+    class="h-50 d-flex flex-column justify-content-evenly border border-2 border-primary-subtle rounded p-5 shadow"
+  >
+    <!-- Button to dashboard -->
+    <a class="btn btn-primary shadow w-100" href="/dashboard" role="button"
+      >Start Scheduling</a
+    >
+    <!-- Button to sign up -->
+    <a class="btn btn-primary shadow w-100" href="/sign-up" role="button"
+      >Sign Up!</a
+    >
+    <!-- Sign up information -->
+    <p class="font-weight-light">
+      Registered users can save and create multiple schedules!
+    </p>
+  </div>
+</section>
 {% endblock %}
