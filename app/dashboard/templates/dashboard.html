@@ -1,17 +1,36 @@
 {% extends "base.html" %}
 <!-- Title -->
-{% block title %}Home{% endblock %}
+{% block title %}Dashboard{% endblock %}
 <!-- Title -->
 
 <!-- Content -->
 {% block content %}
-
 <h1 class="text-center">Dashboard</h1>
+<form action="/add-course">
+  <!-- Form Course Code Label -->
+  {{ form.course_code.label(class="form-label") }}
+  <!-- Form Course Code Box -->
+  {{ form.course_code(class="form-control") }}
+  <!-- Form Course Number Label -->
+  {{ form.course_number.label(class="form-label") }}
+  <!-- Form Course Number Box -->
+  {{ form.course_number(class="form-control") }}
+  <!-- Form Location Label -->
+  {{ form.place.label(class="form-label") }}
+  <!-- Form Location Box -->
+  {{ form.place(class="form-control") }}
+  <!-- Form Course Start Time Label -->
+  {{ form.start_time.label(class="form-label") }}
+  <!-- Form Course Start Time Box -->
+  {{ form.start_time(class="form-control") }}
+  <!-- Form Course End Time Label -->
+  {{ form.end_time.label(class="form-label") }}
+  <!-- Form Course End Time Box -->
+  {{ form.end_time(class="form-control") }}
+  <br />
+  <!-- Form Submit -->
+  {{ form.add_course(class="btn btn-primary") }}
+</form>
+<!---->
 <script type="module" src="static/js/map.js"></script>
 {% endblock %}
-
-<!-- ADD ME BACK IN -->
-<div class="container">
-  <div id="map"></div>
-  <div id="instructions"></div>
-</div>
