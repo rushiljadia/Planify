@@ -6,9 +6,10 @@ users = db.users
 courses = db.courses
 
 
-def add_course():
-    if request.method == "POST":
-        name = request.form.get("name")
-        place = request.form.get("place")
-        start_time = request.form.get("start")
-        end_time = request.form.get("end")
+class User:
+
+    def sign_up(self):
+        user = {
+            "_id": "",
+            
+        }
