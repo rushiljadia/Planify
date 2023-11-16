@@ -2,6 +2,7 @@ from flask import Blueprint, flash, render_template, request, session, redirect,
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField
 from wtforms.validators import DataRequired, Length, EqualTo
+from werkzeug.security import generate_password_hash
 from ..extensions import mongo
 from bcrypt import hashpw, gensalt
 
