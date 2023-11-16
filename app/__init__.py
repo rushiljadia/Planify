@@ -1,7 +1,7 @@
 from flask import Flask
 from config import Config
 
-from .extensions import mongo, login_manager
+from .extensions import mongo, login_manager, bcrypt
 
 
 def create_app():
@@ -11,6 +11,7 @@ def create_app():
     # Initialize plugins
     login_manager.init_app(app)
     mongo.init_app(app)
+    bcrypt.init_app(app)
 
     # register blueprints
     with app.app_context():

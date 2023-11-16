@@ -19,4 +19,4 @@ class Config:
     # Database
     # SQLALCHEMY_DATABASE_URI = environ.get("SQLALCHEMY_DATABASE_URI")
     # SQLALCHEMY_TRACK_MODIFICATIONS = False
-    MONGO_URI = environ.get("MONGODB_CONNECTION")
+    MONGO_URI = environ.get("MONGO_URI")
