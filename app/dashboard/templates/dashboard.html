@@ -7,24 +7,6 @@
 {% block content %}
 
 <h1 class="text-center">Dashboard</h1>
-<section class="d-flex flex-row justify-content-evenly">
-  <div class="container border">
-    <p>Add Classes</p>
-    <form method="POST">
-      <select name="class_select" id="class_select">
-        {% for place in places %}
-        <option value="{{ place.building_name }}">
-          {{ place.building_name }}
-        </option>
-        {% endfor %}
-      </select>
-    </form>
-  </div>
-  <div class="container border">
-    <p>Schedule</p>
-  </div>
-</section>
-
 <script type="module" src="static/js/map.js"></script>
 {% endblock %}
 

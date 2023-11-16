@@ -2,7 +2,7 @@ from flask import Flask
 from flask_migrate import Migrate
 from config import Config
 from flask_login import LoginManager
-from .extensions import db
+from .extensions import client
 
 # Globally accessable libraries
 migrate = Migrate()
@@ -14,9 +14,8 @@ def create_app():
     app.config.from_object(Config)
 
     # Initialize plugins
-    db.init_app(app)
-    migrate.init_app(app, db)
     login_manager.init_app(app)
+    db = client.list_database_names()
 
     # register blueprints
     with app.app_context():
