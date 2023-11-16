@@ -1,12 +1,7 @@
 from flask import Flask
-from flask_migrate import Migrate
 from config import Config
-from flask_login import LoginManager
-from .extensions import client
 
-# Globally accessable libraries
-migrate = Migrate()
-login_manager = LoginManager()
+from .extensions import mongo, login_manager
 
 
 def create_app():
@@ -15,7 +10,7 @@ def create_app():
 
     # Initialize plugins
     login_manager.init_app(app)
-    db = client.list_database_names()
+    mongo.init_app(app)
 
     # register blueprints
     with app.app_context():

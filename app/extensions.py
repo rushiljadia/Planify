@@ -1,8 +1,7 @@
-from pymongo import MongoClient
-from os import environ, path
-from dotenv import load_dotenv
+from flask_pymongo import PyMongo
 
-basedir = path.abspath(path.dirname(__file__))
-load_dotenv(path.join(basedir, ".env"))
+mongo = PyMongo()
 
-client = MongoClient(environ.get("MONGODB_CONNECTION"))
+from flask_login import LoginManager
+
+login_manager = LoginManager()

@@ -2,6 +2,7 @@ from flask import Blueprint, flash, render_template
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField
 from wtforms.validators import DataRequired, Length, EqualTo
+from ..models import User
 
 # Blueprint Configuration
 sign_up_blueprint = Blueprint(
