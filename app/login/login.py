@@ -4,7 +4,6 @@ from wtforms import StringField, SubmitField, PasswordField
 from wtforms.validators import DataRequired
 from werkzeug.security import check_password_hash
 from flask_login import login_user, LoginManager, current_user, logout_user
-from app import login_manager
 from ..extensions import mongo, login_manager
 from bcrypt import hashpw
 
