@@ -1,4 +1,5 @@
 from bcrypt import checkpw
+from .extensions import mongo, login_manager
 
 
 class User:
@@ -23,3 +24,12 @@ class User:
     @staticmethod
     def check_password(password, password_hash):
         return checkpw(password, password_hash)
+
+
+@login_manager.user_loader
+def load_user(username):
+    u = mongo.db.users.find_one({"name": username})
+    if not u:
+        return None
+
+    return User(username=u["name"])

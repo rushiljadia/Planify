@@ -15,13 +15,15 @@ def create_app():
 
     # register blueprints
     with app.app_context():
-        from .home import home
-        from .login import login
-        from .dashboard import dashboard
-        from .sign_up import sign_up
+        # from .login import login
+        # from .sign_up import sign_up
 
-        app.register_blueprint(home.home_blueprint)
-        app.register_blueprint(login.login_blueprint)
-        app.register_blueprint(dashboard.dashboard_blueprint)
-        app.register_blueprint(sign_up.sign_up_blueprint)
+        # app.register_blueprint(login.login_blueprint)
+        # app.register_blueprint(sign_up.sign_up_blueprint)
+
+        from .main import main as main_blueprint
+        from .auth import auth as auth_blueprint
+
+        app.register_blueprint(main_blueprint)
+        app.register_blueprint(auth_blueprint)
         return app
