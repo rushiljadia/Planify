@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, request
 from flask_wtf import Form
 from wtforms import IntegerField, StringField, TimeField, SubmitField, SelectField
 from wtforms.validators import DataRequired
+from flask_login import login_required
 
 
 # Blueprint Configuration
@@ -11,14 +12,14 @@ dashboard_blueprint = Blueprint(
 
 
 @dashboard_blueprint.route("/dashboard", methods=["GET", "POST"])
-# @login_required
+@login_required
 def dashboard():
     form = add_course_form()
     return render_template("dashboard.html", form=form)
 
 
 @dashboard_blueprint.route("/add-course", methods=["GET", "POST"])
-# @login_required
+@login_required
 def add_course():
     form = add_course_form()
     return render_template("dashboard.html", form=form)

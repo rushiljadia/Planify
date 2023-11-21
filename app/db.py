@@ -1,4 +1,4 @@
-from bcrypt import hashpw
+from bcrypt import checkpw
 
 
 class User:
@@ -22,4 +22,4 @@ class User:
 
     @staticmethod
     def check_password(password, password_hash):
-        return hashpw(password, password_hash)
+        return checkpw(password, password_hash)

@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, redirect, url_for, flash, request
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField
 from wtforms.validators import DataRequired
-from flask_login import login_user, current_user, logout_user
+from flask_login import login_user, current_user, logout_user, login_required
 from ..extensions import mongo, login_manager
 from ..db import User
 
@@ -46,6 +46,7 @@ def login():
 
 
 @login_blueprint.route("/logout")
+@login_required
 def logout():
     logout_user()
     return redirect("/login")
