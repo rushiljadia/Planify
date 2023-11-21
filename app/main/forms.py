@@ -1,6 +1,19 @@
 from flask_wtf import Form
-from wtforms import IntegerField, StringField, TimeField, SubmitField, SelectField
-from wtforms.validators import DataRequired
+from wtforms import (
+    IntegerField,
+    StringField,
+    TimeField,
+    SubmitField,
+    SelectField,
+    SelectMultipleField,
+    widgets,
+)
+from wtforms.validators import DataRequired, Length
+
+
+class MultiCheckboxField(SelectMultipleField):
+    widget = widgets.ListWidget(prefix_label=False)
+    option_widget = widgets.CheckboxInput()
 
 
 class add_course_form(Form):
@@ -115,9 +128,21 @@ class add_course_form(Form):
         },
     }
 
-    course_code = StringField("Course Code", validators=[DataRequired()])
-    course_number = IntegerField("Class Number", validators=[DataRequired()])
-    place = SelectField("Course Location", choices=places.keys())
+    course_code = StringField(
+        "Course Code", validators=[DataRequired(), Length(min=4, max=4)]
+    )
+    course_number = IntegerField(
+        "Class Number", validators=[DataRequired(), Length(min=4, max=4)]
+    )
+    place = SelectField(
+        "Course Location", choices=places.keys(), validators=[DataRequired()]
+    )
+
+    string_of_days = ["M\r\nT\r\nW\r\nR\r\nF"]
+    list_of_days = string_of_days[0].split()
+    days = [(x, x) for x in list_of_days]
+    course_days = MultiCheckboxField("Class Days", choices=days)
+
     start_time = TimeField("Start Time", validators=[DataRequired()])
     end_time = TimeField("End Time", validators=[DataRequired()])
     add_course = SubmitField("Add Class")

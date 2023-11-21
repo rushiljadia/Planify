@@ -14,29 +14,19 @@
       rel="stylesheet"
     />
     <link rel="icon" href="../media/Planify_logo.png" />
-    <!-- Google Fonts -->
+    <!-- Google Icons -->
     <link
-      href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
       rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"
     />
     <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js"></script>
     <link
       href="https://api.tiles.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css"
       rel="stylesheet"
     />
-    <style>
-      #map {
-        height: 600px;
-      }
-
-      #instructions {
-        height: 300px;
-      }
-      html,
-      body {
-        height: 100%;
-      }
-    </style>
+    <style></style>
+    <link rel="stylesheet" href="{{ url_for("static", filename="css/style.css")
+    }}" />
     <title>{% block title %}Home{% endblock %}</title>
   </head>
   <body>
@@ -59,7 +49,9 @@
       </div>
       <!-- Container wrapper -->
       {% if current_user.is_authenticated %}
-      <a href="/logout" class="btn btn-primary" tabindex="1">Logout</a>
+      <a href="/logout" class="btn btn-primary" tabindex="1"
+        ><span class="material-symbols-outlined"> logout </span></a
+      >
       {% endif %}
     </nav>
     <!-- Navbar -->
