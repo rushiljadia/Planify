@@ -26,6 +26,10 @@ class User:
         return checkpw(password, password_hash)
 
 
+# Where to redirect unaruorized user
+login_manager.login_view = "auth.login"
+
+
 @login_manager.user_loader
 def load_user(username):
     u = mongo.db.users.find_one({"name": username})
