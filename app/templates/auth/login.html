@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+<!-- Title -->
+{% block title %}Login{% endblock %}
+<!-- Title -->
+
+<!-- Content -->
+{% block content %}
+<!-- Message flashing-->
+{% for message in get_flashed_messages() %}
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+  {{ message }}
+  <button
+    type="button"
+    class="btn-close"
+    data-bs-dismiss="alert"
+    aria-label="Close"
+  ></button>
+</div>
+{% endfor %}
+<section
+  class="h-100 d-flex flex-column align-items-center justify-content-center"
+>
+  <h1>Login</h1>
+  <div
+    class="h-50 d-flex flex-column justify-content-evenly border border-2 border-primary-subtle rounded p-5 shadow"
+  >
+    <form method="POST">
+      {{ form.hidden_tag() }}
+      <!-- Username Label -->
+      {{ form.username.label(class="form-label") }}
+      <!-- Form Username Box -->
+      {{ form.username(class="form-control") }}
+      <br />
+      <!-- Password Label -->
+      {{ form.password.label(class="form-label") }}
+      <!-- Form Password Box -->
+      {{ form.password(class="form-control") }}
+      <br />
+      <!-- Form Submit -->
+      {{ form.submit(class="btn btn-primary") }}
+    </form>
+  </div>
+</section>
+
+{% endblock %}
