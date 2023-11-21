@@ -2,10 +2,9 @@ from flask import Blueprint, render_template, redirect, url_for, flash, request
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField
 from wtforms.validators import DataRequired
-from werkzeug.security import check_password_hash
-from flask_login import login_user, LoginManager, current_user, logout_user
+from flask_login import login_user, current_user, logout_user
 from ..extensions import mongo, login_manager
-from bcrypt import hashpw
+from ..db import User
 
 login_manager.login_view = "login"
 
@@ -13,36 +12,6 @@ login_manager.login_view = "login"
 login_blueprint = Blueprint(
     "login_blueprint", __name__, template_folder="templates", static_folder="static"
 )
-
-
-class User:
-    def __init__(self, username):
-        self.username = username
-
-    @staticmethod
-    def is_authenticated():
-        return True
-
-    @staticmethod
-    def is_active():
-        return True
-
-    @staticmethod
-    def is_anonymous():
-        return False
-
-    def get_id(self):
-        return self.username
-
-    """
-    @staticmethod
-    def check_password(password_hash, password):
-        return check_password_hash(password_hash, password)
-    """
-
-    @staticmethod
-    def check_password(password, password_hash):
-        return hashpw(password, password_hash)
 
 
 @login_manager.user_loader
