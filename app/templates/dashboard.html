@@ -8,9 +8,18 @@
 {% block content %}
 <h1 class="text-center cursive">Dashboard</h1>
 <!-- Class Scroll -->
-<div class="container-fluid py-2 border border-2 rounded">
+<div>
+  <input
+    type="text"
+    id="course-search"
+    placeholder="Search for course names and numbers"
+    autocomplete="off"
+  />
+</div>
+<div class="container-fluid py-2 border border-2 rounded" id="course-results">
   <div class="d-flex flex-row flex-nowrap overflow-auto">
     <!-- Card -->
+    {% for course in courses %}
     <div
       class="card card-block border border-2 rounded mx-2"
       style="min-width: 300px"
@@ -18,7 +27,7 @@
       <!-- Card Body -->
       <div class="card-body">
         <!-- Card Title -->
-        <h5 class="card-title">ITCS 3155</h5>
+        <h5 class="card-title">{{ course }}</h5>
         <h6 class="card-subtitle mb-2 text-body-secondary">Class Name</h6>
         <small class="text-muted">Location Time</small>
       </div>
@@ -32,6 +41,7 @@
         >
       </div>
     </div>
+    {% endfor %}
     <!-- Card -->
     <!-- Card -->
     <div
