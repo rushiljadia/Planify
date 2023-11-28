@@ -1,6 +1,7 @@
 from . import main
 from .forms import add_course_form
-from flask import render_template
+from ..extensions import mongo
+from flask import render_template, request
 from flask_login import login_required
 
 
@@ -14,3 +15,4 @@ def index():
 def dashboard():
     form = add_course_form()
     return render_template("dashboard.html", form=form)
+

@@ -9,3 +9,7 @@ login_manager = LoginManager()
 from flask_bcrypt import Bcrypt
 
 bcrypt = Bcrypt()
+
+from flask_bootstrap import Bootstrap5
+
+bootstrap5 = Bootstrap5()

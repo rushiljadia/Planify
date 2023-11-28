@@ -10,11 +10,14 @@ class LoginForm(FlaskForm):
 
 
 class RegistrationForm(FlaskForm):
-    username = StringField("Username", validators=[DataRequired()])
+    username = StringField(
+        "Username", validators=[DataRequired(), Length(min=4, max=24)]
+    )
     password = PasswordField(
         "Password", validators=[Length(min=8, message="Password to short!")]
     )
     confirm = PasswordField(
-        "Confirm Password", validators=[EqualTo("password", "Password Mismatch")]
+        "Confirm Password",
+        validators=[EqualTo("password", message="Password Mismatch")],
     )
     submit = SubmitField("Submit")
