@@ -1,4 +1,4 @@
-from flask_wtf import Form
+from flask_wtf import FlaskForm
 from wtforms import (
     IntegerField,
     StringField,
@@ -8,15 +8,10 @@ from wtforms import (
     SelectMultipleField,
     widgets,
 )
-from wtforms.validators import DataRequired, Length
+from wtforms.validators import DataRequired, Length, StopValidation
 
 
-class MultiCheckboxField(SelectMultipleField):
-    widget = widgets.ListWidget(prefix_label=False)
-    option_widget = widgets.CheckboxInput()
-
-
-class add_course_form(Form):
+def get_places():
     places = {
         "Atkins Library": {
             "code": "ATKNS",
@@ -127,7 +122,26 @@ class add_course_form(Form):
             "address": "8723 Cameron Blvd, Charlotte, NC 28262",
         },
     }
+    return places.keys()
 
+
+class MultiCheckboxField(SelectMultipleField):
+    widget = widgets.ListWidget(prefix_label=False)
+    option_widget = widgets.CheckboxInput()
+
+
+class MultiCheckboxAtLeastOne:
+    def __init__(self, message=None):
+        if not message:
+            message = "At least one option must be selected."
+        self.message = message
+
+    def __call__(self, form, field):
+        if len(field.data) == 0:
+            raise StopValidation(self.message)
+
+
+class add_course_form(FlaskForm):
     course_code = StringField(
         "Course Code", validators=[DataRequired(), Length(min=4, max=4)]
     )
@@ -135,14 +149,14 @@ class add_course_form(Form):
         "Class Number", validators=[DataRequired(), Length(min=4, max=4)]
     )
     place = SelectField(
-        "Course Location", choices=places.keys(), validators=[DataRequired()]
+        "Course Location", choices=get_places, validators=[DataRequired()]
     )
 
-    string_of_days = ["M\r\nT\r\nW\r\nR\r\nF"]
-    list_of_days = string_of_days[0].split()
-    days = [(x, x) for x in list_of_days]
-    course_days = MultiCheckboxField("Class Days", choices=days)
+    choices = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
 
+    days = MultiCheckboxField(
+        "Class Days", choices=choices, validators=[MultiCheckboxAtLeastOne()]
+    )
     start_time = TimeField("Start Time", validators=[DataRequired()])
     end_time = TimeField("End Time", validators=[DataRequired()])
     add_course = SubmitField("Add Class")
