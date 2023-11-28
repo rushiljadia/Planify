@@ -41,7 +41,8 @@ def sign_up():
     form = RegistrationForm()
     if request.method == "POST":
         user_collection = mongo.db.users
-        existing_user = user_collection.find_one({"name": request.form.get("username")})
+        username = request.form.get("username").lower()
+        existing_user = user_collection.find_one({"name": username})
 
         # if the user does not exist in the database a new account is made for them
         if existing_user is None:
@@ -50,13 +51,17 @@ def sign_up():
                 request.form.get("password").encode("utf-8"), gensalt()
             )
             user_collection.insert_one(
-                {"name": request.form.get("username"), "password": password_hash}
+                {
+                    "name": username,
+                    "password": password_hash,
+                    "schedules": [],
+                }
             )
-            session["username"] = request.form.get("username")
-            return redirect(url_for("home"))
+            session["username"] = username
+            return redirect(url_for("main.dashboard"))
 
         # if the username is already in use the user should choose a new name or login
-        return (
+        flash(
             "That username is already in use! Please try a different username or login"
         )
 
