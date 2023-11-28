@@ -158,5 +158,5 @@ function display(result) {
   const content = result.map((list) => {
     return "<li>" + list + "<li>";
   });
-  resultBox.innerHTML
+  resultBox.innerHTML;
 }
