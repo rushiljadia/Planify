@@ -7,15 +7,14 @@ from wtforms import (
     SelectField,
     SelectMultipleField,
     widgets,
-    RadioField,
     BooleanField,
 )
 from wtforms.validators import (
     DataRequired,
     Length,
     StopValidation,
-    Optional,
     InputRequired,
+    Regexp,
 )
 
 
@@ -166,6 +165,17 @@ class RequiredIf(InputRequired):
 
 
 class AddCourseForm(FlaskForm):
+    course_name = StringField(
+        "Course Name",
+        validators=[
+            DataRequired(),
+            Length(min=4, max=25),
+            Regexp(
+                "/^[a-zA-Z\s]*$/",
+                message="Course name must only contain letters and spaces",
+            ),
+        ],
+    )
     course_code = StringField(
         "Course Code", validators=[DataRequired(), Length(min=4, max=4)]
     )
