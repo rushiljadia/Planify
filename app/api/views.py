@@ -1,8 +1,9 @@
 from . import api
-from ..main.forms import add_course_form
+from ..main.forms import AddCourseForm
 from flask import request
+
 
 @api.route("/get-location/")
 def get_location():
-    form = add_course_form()
+    form = AddCourseForm()
     location = request.form.get("")
