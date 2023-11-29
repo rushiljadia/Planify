@@ -10,13 +10,19 @@ from bcrypt import hashpw, gensalt
 # Login page
 @auth.route("/login", methods=["GET", "POST"])
 def login():
+    # If a logged in user tries to log in they are
+    # redirected back to the home page
     if current_user.is_authenticated:
         return redirect("/")
 
+    # Form that the page uses to log a user in
     form = LoginForm()
     if form.validate_on_submit():
+        # Attempting to find a username that matches what the user has entered
         user = mongo.db.users.find_one({"name": form.username.data})
 
+        # Checking the user name and the password that the user entered
+        # matches to one in the database
         if user and User.check_password(form.password.data.encode(), user["password"]):
             user_obj = User(username=user["name"])
             login_user(user_obj)
@@ -37,19 +43,25 @@ def logout():
 
 @auth.route("/sign-up", methods=["GET", "POST"])
 def sign_up():
+    """Route to the user sign up page"""
     name = None
+    # Form used by the page to sign up
     form = RegistrationForm()
     if request.method == "POST":
+        # Database user collection connection
         user_collection = mongo.db.users
+        # Getting the user name from the form input
         username = request.form.get("username").lower()
+        # Attempting to find the user based on their user name
         existing_user = user_collection.find_one({"name": username})
 
-        # if the user does not exist in the database a new account is made for them
+        # Ff the user does not exist a new account is made for them
         if existing_user is None:
             # Hashing user password
             password_hash = hashpw(
                 request.form.get("password").encode("utf-8"), gensalt()
             )
+            # Inserting the user into the collection
             user_collection.insert_one(
                 {
                     "name": username,
@@ -57,7 +69,9 @@ def sign_up():
                     "schedules": [],
                 }
             )
+            # Updating the session for the now logged in user
             session["username"] = username
+            # Redirect the user back to their dashboard
             return redirect(url_for("main.dashboard"))
 
         # if the username is already in use the user should choose a new name or login
