@@ -1,5 +1,6 @@
-from . import main
+"""For working with errors that might be thrown by the app"""
 from flask import render_template
+from . import main
 
 
 @main.app_errorhandler(404)
