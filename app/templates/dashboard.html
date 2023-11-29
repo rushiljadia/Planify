@@ -60,6 +60,10 @@
           <!-- form row -->
           {{ render_form_row([form.start_time, form.end_time]) }}
           <!-- form row -->
+          {{ render_form_row([form.has_lab, form.lab_day]) }}
+          <!-- form row -->
+          {{ render_form_row([form.lab_start_time, form.lab_end_time]) }}
+          <!-- form row -->
           {{ render_form_row([form.add_course]) }}
         </form>
       </div>
@@ -67,7 +71,6 @@
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
           Close
         </button>
-        <button type="button" class="btn btn-primary">Save changes</button>
       </div>
     </div>
   </div>
@@ -75,6 +78,7 @@
 <!-- Modal -->
 
 <!-- Scripts -->
-<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+
+<script src="{{url_for('static', filename='js/dashboard.js')}}"></script>
 <script type="module" src="static/js/map.js"></script>
 {% endblock %}

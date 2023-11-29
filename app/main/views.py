@@ -1,5 +1,5 @@
 from . import main
-from .forms import add_course_form
+from .forms import AddCourseForm
 from ..extensions import mongo
 from ..api.geocoding import get_location
 from flask import render_template, request, redirect
@@ -14,7 +14,7 @@ def index():
 @main.route("/dashboard", methods=["GET", "POST"])
 @login_required
 def dashboard():
-    form = add_course_form()
+    form = AddCourseForm()
     return render_template("dashboard.html", form=form)
 
 

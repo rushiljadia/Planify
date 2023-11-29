@@ -7,8 +7,16 @@ from wtforms import (
     SelectField,
     SelectMultipleField,
     widgets,
+    RadioField,
+    BooleanField,
 )
-from wtforms.validators import DataRequired, Length, StopValidation
+from wtforms.validators import (
+    DataRequired,
+    Length,
+    StopValidation,
+    Optional,
+    InputRequired,
+)
 
 
 def get_places():
@@ -141,7 +149,23 @@ class MultiCheckboxAtLeastOne:
             raise StopValidation(self.message)
 
 
-class add_course_form(FlaskForm):
+class RequiredIf(InputRequired):
+    # a validator which makes a field required if
+    # another field is set and has a truthy value
+
+    def __init__(self, other_field_name, *args, **kwargs):
+        self.other_field_name = other_field_name
+        super(RequiredIf, self).__init__(*args, **kwargs)
+
+    def __call__(self, form, field):
+        other_field = form._fields.get(self.other_field_name)
+        if other_field is None:
+            raise Exception('no field named "%s" in form' % self.other_field_name)
+        if bool(other_field.data):
+            super(RequiredIf, self).__call__(form, field)
+
+
+class AddCourseForm(FlaskForm):
     course_code = StringField(
         "Course Code", validators=[DataRequired(), Length(min=4, max=4)]
     )
@@ -157,6 +181,27 @@ class add_course_form(FlaskForm):
     days = MultiCheckboxField(
         "Class Days", choices=choices, validators=[MultiCheckboxAtLeastOne()]
     )
+    # Course Lab Section
+    has_lab = BooleanField(
+        "Does this class have a lab?", render_kw={"onclick": "disableFormFields()"}
+    )
+    lab_day = SelectField(
+        "Lab Day",
+        choices=choices,
+        render_kw={"disabled": "true"},
+        validators=[RequiredIf("has_lab")],
+    )
+    lab_start_time = TimeField(
+        "Lab start time",
+        render_kw={"disabled": "true"},
+        validators=[RequiredIf("has_lab")],
+    )
+    lab_end_time = TimeField(
+        "Lab End Time",
+        render_kw={"disabled": "true"},
+        validators=[RequiredIf("has_lab")],
+    )
+
     start_time = TimeField("Start Time", validators=[DataRequired()])
     end_time = TimeField("End Time", validators=[DataRequired()])
     add_course = SubmitField("Add Class")

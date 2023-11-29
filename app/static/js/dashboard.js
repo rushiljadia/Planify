@@ -7,6 +7,24 @@ function showAddClass() {
   }
 }
 
+function disableFormFields() {
+  console.log("Dashbaord js is working");
+  var checkbox = document.getElementById("has_lab");
+  var labDay = document.getElementById("lab_day");
+  var labStartTime = document.getElementById("lab_start_time");
+  var labEndTime = document.getElementById("lab_end_time");
+
+  if (checkbox.checked == true) {
+    labDay.disabled = false;
+    labStartTime.disabled = false;
+    labEndTime.disabled = false;
+  } else {
+    labDay.disabled = true;
+    labStartTime.disabled = true;
+    labEndTime.disabled = true;
+  }
+}
+
 let availableCourses = [
   "AAHP",
   "ACCT",
