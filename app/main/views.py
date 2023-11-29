@@ -1,9 +1,8 @@
+from flask import render_template, request
+from flask_login import login_required
 from . import main
 from .forms import AddCourseForm
 from ..extensions import mongo
-from ..api.geocoding import get_location
-from flask import render_template, request, redirect
-from flask_login import login_required
 
 
 @main.route("/")
