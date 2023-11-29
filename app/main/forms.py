@@ -20,114 +20,33 @@ from wtforms.validators import (
 
 def get_places():
     places = {
-        "Atkins Library": {
-            "code": "ATKNS",
-            "address": "9201 University City Blvd, Charlotte, NC 28223",
-        },
-        "Barnard": {
-            "code": "BRNRD",
-            "address": "9129 Mary Alexander Rd, Charlotte, NC 28223",
-        },
-        "Belk Gym": {
-            "code": "GYMNS",
-            "address": "8911 University Rd, Charlotte, NC 28223",
-        },
-        "Bioinformatics": {
-            "code": "BION",
-            "address": "9331 Robert D. Snyder Rd, Charlotte, NC 28223",
-        },
-        "Burson": {
-            "code": "BURSN",
-            "address": "9006 Craver Rd, Charlotte, NC 28223",
-        },
-        "Cameron": {
-            "code": "CARC",
-            "address": "9010 Craver Rd, Charlotte, NC 28223",
-        },
-        "Cato College of Education": {
-            "code": "COED",
-            "address": "8838 Craver Rd, Charlotte, NC 28223",
-        },
-        "College of Health and Human Services": {
-            "code": "CHHS",
-            "address": "8844 Craver Rd, Charlotte, NC 28223",
-        },
-        "Colvard": {
-            "code": "COLVD",
-            "address": "9105 University Rd, Charlotte, NC 28223",
-        },
-        "Bonnie E. Cone Center": {
-            "code": "CONE",
-            "address": "9025 University Rd, Charlotte, NC 28223",
-        },
-        "Denny": {
-            "code": "DENNY",
-            "address": "9125 Mary Alexander Rd, Charlotte, NC 28223",
-        },
-        "Duke Centennial": {
-            "code": "DUKE",
-            "address": "9330 Robert D. Snyder Rd, Charlotte, NC 28223",
-        },
-        "Energy Production and Infrastructure Center": {
-            "code": "EPIC",
-            "address": "8700 Phillips Rd, Charlotte, NC 28262",
-        },
-        "Fretwell": {
-            "code": "FRET",
-            "address": "9203 Mary Alexander Rd, Charlotte, NC 28223",
-        },
-        "Friday": {
-            "code": "FRIDY",
-            "address": "9209 Mary Alexander Rd, Charlotte, NC 28262",
-        },
-        "Garinger": {
-            "code": "GRNGR",
-            "address": "9121 Mary Alexander Rd, Charlotte, NC 28223",
-        },
-        "Kennedy": {
-            "code": "KNNDY",
-            "address": "9214 South Library Ln, Charlotte, NC 28223",
-        },
-        "Macy": {
-            "code": "MACY",
-            "address": "9224 Library Ln, Charlotte, NC 28223",
-        },
-        "McEniry": {
-            "code": "MCEN",
-            "address": "9215 Mary Alexander Rd, Charlotte, NC 28223",
-        },
-        "Popp Martin Student Union": {
-            "code": "STUN",
-            "address": "8845 Craver Rd, Charlotte, NC 28262",
-        },
-        "Robinson": {
-            "code": "ROBIN",
-            "address": "9027 Mary Alexander Rd, Charlotte, NC 28223",
-        },
-        "Rowe Arts": {
-            "code": "ROWE",
-            "address": "9119 University Rd, Charlotte, NC 28223",
-        },
-        "Science": {
-            "code": "SCIENC",
-            "address": "9029 Craver Rd, Charlotte, NC 28223",
-        },
-        "Smith": {
-            "code": "SMITH",
-            "address": "319 Library Ln, Charlotte, NC 28223",
-        },
-        "Storrs": {
-            "code": "STORR",
-            "address": "9115 Mary Alexander Rd, Charlotte, NC 28262",
-        },
-        "Winningham": {
-            "code": "WINN",
-            "address": "9236 SOUTH Library Ln, Charlotte, NC 28223",
-        },
-        "Woodward": {
-            "code": "WOODW",
-            "address": "8723 Cameron Blvd, Charlotte, NC 28262",
-        },
+        "Atkins Library": "9201 University City Blvd, Charlotte, NC 28223",
+        "Barnard": "9129 Mary Alexander Rd, Charlotte, NC 28223",
+        "Belk Gym": "8911 University Rd, Charlotte, NC 28223",
+        "Bioinformatics": "9331 Robert D. Snyder Rd, Charlotte, NC 28223",
+        "Burson": "9006 Craver Rd, Charlotte, NC 28223",
+        "Cameron": "9010 Craver Rd, Charlotte, NC 28223",
+        "Cato College of Education": "8838 Craver Rd, Charlotte, NC 28223",
+        "College of Health and Human Services": "8844 Craver Rd, Charlotte, NC 28223",
+        "Colvard": "9105 University Rd, Charlotte, NC 28223",
+        "Bonnie E. Cone Center": "9025 University Rd, Charlotte, NC 28223",
+        "Denny": "9125 Mary Alexander Rd, Charlotte, NC 28223",
+        "Duke Centennial": "9330 Robert D. Snyder Rd, Charlotte, NC 28223",
+        "Energy Production and Infrastructure Center": "8700 Phillips Rd, Charlotte, NC 28262",
+        "Fretwell": "9203 Mary Alexander Rd, Charlotte, NC 28223",
+        "Friday": "9209 Mary Alexander Rd, Charlotte, NC 28262",
+        "Garinger": "9121 Mary Alexander Rd, Charlotte, NC 28223",
+        "Kennedy": "9214 South Library Ln, Charlotte, NC 28223",
+        "Macy": "9224 Library Ln, Charlotte, NC 28223",
+        "McEniry": "9215 Mary Alexander Rd, Charlotte, NC 28223",
+        "Popp Martin Student Union": "8845 Craver Rd, Charlotte, NC 28262",
+        "Robinson": "9027 Mary Alexander Rd, Charlotte, NC 28223",
+        "Rowe Arts": "9119 University Rd, Charlotte, NC 28223",
+        "Science": "9029 Craver Rd, Charlotte, NC 28223",
+        "Smith": "319 Library Ln, Charlotte, NC 28223",
+        "Storrs": "9115 Mary Alexander Rd, Charlotte, NC 28262",
+        "Winningham": "9236 SOUTH Library Ln, Charlotte, NC 28223",
+        "Woodward": "8723 Cameron Blvd, Charlotte, NC 28262",
     }
     return places.keys()
 
@@ -149,8 +68,12 @@ class MultiCheckboxAtLeastOne:
 
 
 class RequiredIf(InputRequired):
-    # a validator which makes a field required if
-    # another field is set and has a truthy value
+    """Custom validator that makes a field requires only if another field
+    is set and has a true values
+
+    Raises:
+        Exception: If there is no such field passed to the validator
+    """
 
     def __init__(self, other_field_name, *args, **kwargs):
         self.other_field_name = other_field_name
@@ -165,6 +88,9 @@ class RequiredIf(InputRequired):
 
 
 class AddCourseForm(FlaskForm):
+    """For used to add a class to the database"""
+
+    # Field for the class name
     course_name = StringField(
         "Course Name",
         validators=[
@@ -176,42 +102,57 @@ class AddCourseForm(FlaskForm):
             ),
         ],
     )
+
+    # Field for the class code
     course_code = StringField(
         "Course Code", validators=[DataRequired(), Length(min=4, max=4)]
     )
+
+    # Field for the class number
     course_number = IntegerField(
         "Class Number", validators=[DataRequired(), Length(min=4, max=4)]
     )
+
+    # Field to select which building the course takes place
     place = SelectField(
         "Course Location", choices=get_places, validators=[DataRequired()]
     )
 
     choices = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
 
+    # Day selection field
     days = MultiCheckboxField(
         "Class Days", choices=choices, validators=[MultiCheckboxAtLeastOne()]
     )
+
+    # Time that the class starts on each day
+    start_time = TimeField("Start Time", validators=[DataRequired()])
+    # Time that the class ends on each day
+    end_time = TimeField("End Time", validators=[DataRequired()])
+
     # Course Lab Section
     has_lab = BooleanField(
         "Does this class have a lab?", render_kw={"onclick": "disableFormFields()"}
     )
+
+    # Day that the lab takes place
     lab_day = SelectField(
         "Lab Day",
         choices=choices,
         render_kw={"disabled": "true"},
         validators=[RequiredIf("has_lab")],
     )
+    # Time that the lab starts
     lab_start_time = TimeField(
         "Lab start time",
         render_kw={"disabled": "true"},
         validators=[RequiredIf("has_lab")],
     )
+    # Time that the lab ends
     lab_end_time = TimeField(
         "Lab End Time",
         render_kw={"disabled": "true"},
         validators=[RequiredIf("has_lab")],
     )
 
-    start_time = TimeField("Start Time", validators=[DataRequired()])
-    end_time = TimeField("End Time", validators=[DataRequired()])
     add_course = SubmitField("Add Class")

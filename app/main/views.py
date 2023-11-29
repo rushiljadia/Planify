@@ -8,6 +8,7 @@ from flask_login import login_required
 
 @main.route("/")
 def index():
+    """Route for the homepage of the website"""
     return render_template("index.html")
 
 
@@ -58,8 +59,11 @@ def dashboard():
 
 @main.route("/search", methods=["GET", "POST"])
 def search():
+    """Used by the user to search for classes that exist in the database"""
+    # Connection to the courses collection of the database
     courses = mongo.db.courses
 
+    # Getting the users input from the search bar
     q = request.args.get("q")
 
     # Users can serach by course code or course name
@@ -75,6 +79,7 @@ def search():
             )
         )
     else:
+        # If no results are found, an empty list is given
         results = []
 
     return render_template("search_results.html", results=results)
