@@ -1,15 +1,20 @@
+from flask_login import login_user, current_user, logout_user, login_required
+from flask import render_template, redirect, url_for, flash, request, session
+from bcrypt import hashpw, gensalt
 from . import auth
 from .forms import LoginForm, RegistrationForm
-from flask import render_template, redirect, url_for, flash, request, session
-from flask_login import login_user, current_user, logout_user, login_required
 from ..extensions import mongo
 from ..db import User
-from bcrypt import hashpw, gensalt
 
 
 # Login page
 @auth.route("/login", methods=["GET", "POST"])
 def login():
+    """Function that logs a user in
+
+    Returns:
+        template: the login page
+    """
     # If a logged in user tries to log in they are
     # redirected back to the home page
     if current_user.is_authenticated:
@@ -37,6 +42,11 @@ def login():
 @auth.route("/logout")
 @login_required
 def logout():
+    """Method used to logout
+
+    Returns:
+        redirect: redirects the user to the login page
+    """
     logout_user()
     return redirect("/login")
 
@@ -74,10 +84,9 @@ def sign_up():
             # Redirect the user back to their dashboard
             return redirect(url_for("main.dashboard"))
 
-        # if the username is already in use the user should choose a new name or login
-        flash(
-            "That username is already in use! Please try a different username or login"
-        )
+        # if the username is already in use the user should choose a
+        # new name or login
+        flash("That username is already taken! Try a different username or login")
 
     # if the method is GET the page is returned
     return render_template("auth/sign_up.html", name=name, form=form)
