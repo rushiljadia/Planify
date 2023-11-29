@@ -23,10 +23,19 @@ def search():
     courses = mongo.db.courses
 
     q = request.args.get("q")
-    print(q)
 
+    # Users can serach by course code or course name
     if q:
-        results = list(courses.find({"code": {"$regex": q}}))
+        results = list(
+            courses.find(
+                {
+                    "$or": [
+                        {"code": {"$regex": q.upper()}},
+                        {"name": {"$regex": q.title()}},
+                    ]
+                }
+            )
+        )
     else:
         results = []
 
