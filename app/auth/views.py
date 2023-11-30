@@ -1,3 +1,5 @@
+"""For all views used for authentication. Includes:
+user login, user registration, and user logout"""
 from flask_login import login_user, current_user, logout_user, login_required
 from flask import render_template, redirect, url_for, flash, request, session
 from bcrypt import hashpw, gensalt
@@ -25,10 +27,12 @@ def login():
     if form.validate_on_submit():
         # Attempting to find a username that matches what the user has entered
         user = mongo.db.users.find_one({"name": form.username.data})
+        # Getting and encoding the user password from the form
+        user_password = form.password.data.encode()
 
         # Checking the user name and the password that the user entered
         # matches to one in the database
-        if user and User.check_password(form.password.data.encode(), user["password"]):
+        if user and User.check_password(user_password, user["password"]):
             user_obj = User(username=user["name"])
             login_user(user_obj)
             return redirect("/dashboard")

@@ -1,3 +1,4 @@
+"""Forms for the main functions of the app"""
 from flask_wtf import FlaskForm
 from wtforms import (
     IntegerField,
@@ -19,6 +20,12 @@ from wtforms.validators import (
 
 
 def get_places():
+    """Holds the possible places that a user could take a class at along with
+    the address of the building
+
+    Returns:
+        dict: All of the names of the buildings
+    """
     places = {
         "Atkins Library": "9201 University City Blvd, Charlotte, NC 28223",
         "Barnard": "9129 Mary Alexander Rd, Charlotte, NC 28223",
@@ -52,11 +59,21 @@ def get_places():
 
 
 class MultiCheckboxField(SelectMultipleField):
+    """Helper class to create a multi checkbox for field
+
+    Args:
+        SelectMultipleField (): Field for multiple selections
+    """
+
     widget = widgets.ListWidget(prefix_label=False)
     option_widget = widgets.CheckboxInput()
 
 
 class MultiCheckboxAtLeastOne:
+    """Helper function for a validating the multicheckbox field.
+    Ensures that the user selects atleast one of the options
+    """
+
     def __init__(self, message=None):
         if not message:
             message = "At least one option must be selected."
@@ -82,7 +99,7 @@ class RequiredIf(InputRequired):
     def __call__(self, form, field):
         other_field = form._fields.get(self.other_field_name)
         if other_field is None:
-            raise Exception('no field named "%s" in form' % self.other_field_name)
+            raise Exception(f"no field named {self.other_field_name} in form")
         if bool(other_field.data):
             super(RequiredIf, self).__call__(form, field)
 
