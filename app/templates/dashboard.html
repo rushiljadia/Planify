@@ -31,27 +31,52 @@
 {% endif %}
 <!---->
 {% endwith %}
+<!-- Message flashing-->
 
 <!-- Dahboard Page-->
 <h1 class="text-center cursive">Dashboard</h1>
-<!-- Search bar -->
-<div>
-  <input
-    type="text"
-    name="q"
-    placeholder="Search for courses"
-    hx-get="/search"
-    hx-trigger="keyup changed delay:500ms"
-    hx-target="#courses"
-  />
-</div>
-<!-- Search bar -->
+<div class="container p-2">
+  <!-- Row -->
+  <div class="row gx-2 justify-content-center border border-2 rounded p-2">
+    <!-- Search bar -->
+    <div class="input-group rounded mb-2" style="width: 15rem">
+      <input
+        type="search"
+        class="form-control rounded"
+        aria-label="Search"
+        aria-describedby="search-addon"
+        name="q"
+        placeholder="Search for courses"
+        hx-get="/search"
+        hx-trigger="keyup changed delay:500ms"
+        hx-target="#courses"
+      />
+      <span class="input-group-text border-0" id="search-addon">
+        <i class="fas fa-search"></i>
+      </span>
+    </div>
+    <!-- Class Scroll Container -->
+    <div
+      class="container-fluid py-2 border border-2 rounded"
+      id="class-cards-container"
+    >
+      <!-- Class Scroll Card Container -->
+      <div class="d-flex flex-row flex-nowrap overflow-auto" id="courses">
+        <!-- This is where search results will be displayed -->
+      </div>
+    </div>
+  </div>
+  <!-- Row -->
+  <!-- Row -->
 
-<!-- Class Scroll Container -->
-<div class="container-fluid py-2 border border-2 rounded">
-  <!-- Class Scroll Card Container -->
-  <div class="d-flex flex-row flex-nowrap overflow-auto" id="courses">
-    <!-- This is where search results will be displayed -->
+  <div class="row gx-2 justify-content-center">
+    <!-- Class Card -->
+    <div class="card text-center border-2" style="width: 10rem">
+      <div class="card-body">
+        <h5 class="card-title">Class One</h5>
+      </div>
+    </div>
+    <!-- Class Card -->
   </div>
 </div>
 

@@ -16,8 +16,19 @@
   <div class="card-footer">
     <a
       href="#"
-      class="btn btn-outline-primary stretched-link"
+      class="btn btn-outline-primary stretched-link add-class-btn"
       style="width: 100%"
+      data-course-code="{{ result.code }}"
+      data-course-name="{{ result.name }}"
+      data-course-place="{{ result.place }}"
+      data-course-days="{{ result.days }}"
+      data-course-start-time="{{ result.start_time }}"
+      data-course-end-time="{{ result.end_time }}"
+      data-course-has-lab="{{ result.has_lab }}"
+      data-course-lab-day="{{ result.lab_day }}"
+      data-course-lab-start-time="{{ result.lab_start_time }}"
+      data-course-lab-end-time="{{ result.lab_end_time }}"
+      hx-trigger="click"
       >+</a
     >
   </div>
