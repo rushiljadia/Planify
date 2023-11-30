@@ -1,17 +1,18 @@
 """Forms for the main functions of the app"""
+from typing import Any
 from flask_wtf import FlaskForm
 from wtforms import (
+    Field,
     IntegerField,
     StringField,
-    TimeField,
     SubmitField,
     SelectField,
     SelectMultipleField,
+    TimeField,
     widgets,
     BooleanField,
 )
 from wtforms.validators import (
-    DataRequired,
     Length,
     StopValidation,
     InputRequired,
@@ -21,41 +22,41 @@ from wtforms.validators import (
 
 def get_places():
     """Holds the possible places that a user could take a class at along with
-    the address of the building
+    the address of the building"""
+    places = [
+        ("9201 University City Blvd, Charlotte, NC 28223", "Atkins Library"),
+        ("9129 Mary Alexander Rd, Charlotte, NC 28223", "Barnard"),
+        ("8911 University Rd, Charlotte, NC 28223", "Belk Gym"),
+        ("9331 Robert D. Snyder Rd, Charlotte, NC 28223", "Bioinformatics"),
+        ("9006 Craver Rd, Charlotte, NC 28223", "Burson"),
+        ("9010 Craver Rd, Charlotte, NC 28223", "Cameron"),
+        ("8838 Craver Rd, Charlotte, NC 28223", "Cato College of Education"),
+        ("8844 Craver Rd, Charlotte, NC 28223", "College of Health and Human Services"),
+        ("9105 University Rd, Charlotte, NC 28223", "Colvard"),
+        ("9025 University Rd, Charlotte, NC 28223", "Bonnie E. Cone Center"),
+        ("9125 Mary Alexander Rd, Charlotte, NC 28223", "Denny"),
+        ("9330 Robert D. Snyder Rd, Charlotte, NC 28223", "Duke Centennial"),
+        (
+            "8700 Phillips Rd, Charlotte, NC 28262",
+            "Energy Production and Infrastructure Center",
+        ),
+        ("9203 Mary Alexander Rd, Charlotte, NC 28223", "Fretwell"),
+        ("9209 Mary Alexander Rd, Charlotte, NC 28262", "Friday"),
+        ("9121 Mary Alexander Rd, Charlotte, NC 28223", "Garinger"),
+        ("9214 South Library Ln, Charlotte, NC 28223", "Kennedy"),
+        ("9224 Library Ln, Charlotte, NC 28223", "Macy"),
+        ("9215 Mary Alexander Rd, Charlotte, NC 28223", "McEniry"),
+        ("8845 Craver Rd, Charlotte, NC 28262", "Popp Martin Student Union"),
+        ("9027 Mary Alexander Rd, Charlotte, NC 28223", "Robinson"),
+        ("9119 University Rd, Charlotte, NC 28223", "Rowe Arts"),
+        ("9029 Craver Rd, Charlotte, NC 28223", "Science"),
+        ("319 Library Ln, Charlotte, NC 28223", "Smith"),
+        ("9115 Mary Alexander Rd, Charlotte, NC 28262", "Storrs"),
+        ("9236 SOUTH Library Ln, Charlotte, NC 28223", "Winningham"),
+        ("8723 Cameron Blvd, Charlotte, NC 28262", "Woodward"),
+    ]
 
-    Returns:
-        dict: All of the names of the buildings
-    """
-    places = {
-        "Atkins Library": "9201 University City Blvd, Charlotte, NC 28223",
-        "Barnard": "9129 Mary Alexander Rd, Charlotte, NC 28223",
-        "Belk Gym": "8911 University Rd, Charlotte, NC 28223",
-        "Bioinformatics": "9331 Robert D. Snyder Rd, Charlotte, NC 28223",
-        "Burson": "9006 Craver Rd, Charlotte, NC 28223",
-        "Cameron": "9010 Craver Rd, Charlotte, NC 28223",
-        "Cato College of Education": "8838 Craver Rd, Charlotte, NC 28223",
-        "College of Health and Human Services": "8844 Craver Rd, Charlotte, NC 28223",
-        "Colvard": "9105 University Rd, Charlotte, NC 28223",
-        "Bonnie E. Cone Center": "9025 University Rd, Charlotte, NC 28223",
-        "Denny": "9125 Mary Alexander Rd, Charlotte, NC 28223",
-        "Duke Centennial": "9330 Robert D. Snyder Rd, Charlotte, NC 28223",
-        "Energy Production and Infrastructure Center": "8700 Phillips Rd, Charlotte, NC 28262",
-        "Fretwell": "9203 Mary Alexander Rd, Charlotte, NC 28223",
-        "Friday": "9209 Mary Alexander Rd, Charlotte, NC 28262",
-        "Garinger": "9121 Mary Alexander Rd, Charlotte, NC 28223",
-        "Kennedy": "9214 South Library Ln, Charlotte, NC 28223",
-        "Macy": "9224 Library Ln, Charlotte, NC 28223",
-        "McEniry": "9215 Mary Alexander Rd, Charlotte, NC 28223",
-        "Popp Martin Student Union": "8845 Craver Rd, Charlotte, NC 28262",
-        "Robinson": "9027 Mary Alexander Rd, Charlotte, NC 28223",
-        "Rowe Arts": "9119 University Rd, Charlotte, NC 28223",
-        "Science": "9029 Craver Rd, Charlotte, NC 28223",
-        "Smith": "319 Library Ln, Charlotte, NC 28223",
-        "Storrs": "9115 Mary Alexander Rd, Charlotte, NC 28262",
-        "Winningham": "9236 SOUTH Library Ln, Charlotte, NC 28223",
-        "Woodward": "8723 Cameron Blvd, Charlotte, NC 28262",
-    }
-    return places.keys()
+    return places
 
 
 class MultiCheckboxField(SelectMultipleField):
@@ -111,7 +112,7 @@ class AddCourseForm(FlaskForm):
     course_name = StringField(
         "Course Name",
         validators=[
-            DataRequired(),
+            InputRequired(),
             Length(min=4, max=25),
             Regexp(
                 "/^[a-zA-Z\s]*$/",
@@ -122,20 +123,26 @@ class AddCourseForm(FlaskForm):
 
     # Field for the class code
     course_code = StringField(
-        "Course Code", validators=[DataRequired(), Length(min=4, max=4)]
+        "Course Code", validators=[InputRequired(), Length(min=4, max=4)]
     )
 
     # Field for the class number
     course_number = IntegerField(
-        "Class Number", validators=[DataRequired(), Length(min=4, max=4)]
+        "Class Number", validators=[InputRequired(), Length(min=4, max=4)]
     )
 
     # Field to select which building the course takes place
     place = SelectField(
-        "Course Location", choices=get_places, validators=[DataRequired()]
+        "Course Location", choices=get_places, validators=[InputRequired()]
     )
 
-    choices = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
+    choices = [
+        ("M", "Monday"),
+        ("T", "Tuesday"),
+        ("W", "Wednesday"),
+        ("R", "Thursday"),
+        ("F", "Friday"),
+    ]
 
     # Day selection field
     days = MultiCheckboxField(
@@ -143,9 +150,9 @@ class AddCourseForm(FlaskForm):
     )
 
     # Time that the class starts on each day
-    start_time = TimeField("Start Time", validators=[DataRequired()])
+    start_time = TimeField("Start Time", format="%H:%M", validators=[InputRequired()])
     # Time that the class ends on each day
-    end_time = TimeField("End Time", validators=[DataRequired()])
+    end_time = TimeField("End Time", format="%H:%M", validators=[InputRequired()])
 
     # Course Lab Section
     has_lab = BooleanField(

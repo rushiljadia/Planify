@@ -1,5 +1,6 @@
 """For handling the views of the apps main functionality"""
-from flask import render_template, request
+import json
+from flask import render_template, request, flash, redirect
 from flask_login import login_required
 from . import main
 from .forms import AddCourseForm
@@ -24,45 +25,86 @@ def dashboard():
         render_template: Rendering of the dashboard page
     """
     form = AddCourseForm()
+    # Connection to the mongoDB course collection
+    course_collection = mongo.db.courses
 
-    if request.method == "POST":
-        course_collection = mongo.db.courses
-        course_name = request.form.get("course_name").title()
-        course_code = request.form.get("course_code").upper()
-        course_code_number = request.form.get("course_number")
-
-        course_prefix = f"{course_code} {course_code_number}"
-
-        course_place = request.form.get("course_place")
-        course_days = request.form.get("course_days")
-        course_start_time = request.form.get("start_time")
-        course_end_time = request.form.get("end_time")
-        course_has_lab = request.form.get("has_lab")
-        course_lab_day = request.form.get("lab_day")
-        course_lab_start_time = request.form.get("lab_start_time")
-        course_lab_end_time = request.form.get("lab_end_time")
-
-        existing_class = course_collection.find_one(
-            {
-                "$or": [
-                    {"code": {"$regex": course_prefix}},
-                    {"name": {"$regex": course_name}},
-                ]
-            }
-        )
-
-        print(course_name)
-        print(course_prefix)
-        print(course_place)
-        print(course_days)
-        print(course_start_time)
-        print(course_end_time)
-        print(course_has_lab)
-        print(course_lab_day)
-        print(course_lab_start_time)
-        print(course_lab_end_time)
+    if request.method == "POST" and form.validate_on_submit:
+        add_course(form, course_collection)
 
     return render_template("dashboard.html", form=form)
+
+
+def get_course_info(form):
+    # Getting the course name and formatting it to title case
+    course_name = form.course_name.data.title()
+    # Getting the course code and formmating it to all caps
+    course_code = form.course_code.data.upper()
+    # Getting the course number
+    course_code_number = form.course_number.data
+    # Creating the course prefix (i.e., ITCS 1212)
+    course_prefix = f"{course_code} {course_code_number}"
+    # Getting the address of where the course takes place
+    course_place = form.place.data
+    # Getting the days that the course takes place on as a list
+    course_days = form.days.data
+    # Getting the course start time
+    course_start_time = form.start_time.data
+    # Getting the course end time
+    course_end_time = form.end_time.data
+    # Getting if the course has a lab or not
+    course_has_lab = form.has_lab.data
+    # Getting the day that the lab takes place
+    course_lab_day = form.lab_day.data
+    # Getting the lab start time
+    course_lab_start_time = form.lab_start_time.data
+    # Getting the lab end time
+    course_lab_end_time = form.lab_end_time.data
+
+    if course_has_lab:
+        course_to_add = {
+            "name": course_name,
+            "days": course_days,
+            "start": str(course_start_time),
+            "end": str(course_end_time),
+            "code": course_prefix,
+            "place": course_place,
+            "lab": {
+                "day": course_lab_day,
+                "lab_start": str(course_lab_start_time),
+                "lab_end": str(course_lab_end_time),
+            },
+        }
+    else:
+        course_to_add = {
+            "name": course_name,
+            "days": course_days,
+            "start": str(course_start_time),
+            "end": str(course_end_time),
+            "code": course_prefix,
+            "place": course_place,
+            "lab": None,
+        }
+
+    return course_to_add
+
+
+def add_course(form, course_collection):
+    course_to_add = get_course_info(form)
+    # Creating a query for an existing class to prevent duplicate
+    # classes being added
+    existing_class = course_collection.find_one(
+        {
+            "$or": [
+                {"code": {"$regex": course_to_add["code"]}},
+                {"name": {"$regex": course_to_add["name"]}},
+            ]
+        }
+    )
+    if existing_class is not None:
+        flash("That course already exists!", category="danger")
+    else:
+        course_collection.insert_one(course_to_add)
+        flash("Class added!", category="success")
 
 
 @main.route("/search", methods=["GET", "POST"])
