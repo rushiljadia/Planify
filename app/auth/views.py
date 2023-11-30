@@ -34,6 +34,7 @@ def login():
         # matches to one in the database
         if user and User.check_password(user_password, user["password"]):
             user_obj = User(username=user["name"])
+            session["username"] = user["name"]
             login_user(user_obj)
             return redirect("/dashboard")
 

@@ -1,20 +1,12 @@
-function showAddClass() {
-  var x = document.getElementById("add-class-form");
-  if (x.style.display === "none") {
-    x.style.display = "block";
-  } else {
-    x.style.display = "none";
-  }
-}
+console.log("Dashboard js is working");
 
 function disableFormFields() {
-  console.log("Dashbaord js is working");
   var checkbox = document.getElementById("has_lab");
   var labDay = document.getElementById("lab_day");
   var labStartTime = document.getElementById("lab_start_time");
   var labEndTime = document.getElementById("lab_end_time");
 
-  if (checkbox.checked == true) {
+  if (checkbox.checked) {
     labDay.disabled = false;
     labStartTime.disabled = false;
     labEndTime.disabled = false;
@@ -25,156 +17,53 @@ function disableFormFields() {
   }
 }
 
-let availableCourses = [
-  "AAHP",
-  "ACCT",
-  "ADMN",
-  "AEEE",
-  "AERO",
-  "AFRS",
-  "AMST",
-  "ANTH",
-  "ARBC",
-  "ARCH",
-  "ARSC",
-  "ARTA",
-  "ARTB",
-  "ARTC",
-  "ARTD",
-  "ARTE",
-  "ARTF",
-  "ARTG",
-  "ARTH",
-  "ARTL",
-  "ARTM",
-  "ARTP",
-  "ARTR",
-  "ARTT",
-  "ARTZ",
-  "ATRN",
-  "BDBA",
-  "BINF",
-  "BIOL",
-  "BLAW",
-  "BPHD",
-  "BUSA",
-  "BUSN",
-  "CAPI",
-  "CEGR",
-  "CHEM",
-  "CHFD",
-  "CHNS",
-  "CJUS",
-  "CLAS",
-  "CMET",
-  "COAA",
-  "COMM",
-  "CSLG",
-  "CTCM",
-  "CUYC",
-  "DANC",
-  "DSBA",
-  "DTSC",
-  "ECGR",
-  "ECON",
-  "EDCI",
-  "EDUC",
-  "EIST",
-  "ELDT",
-  "ELED",
-  "ELET",
-  "ELTI",
-  "EMGT",
-  "ENER",
-  "ENGL",
-  "ENGR",
-  "ENTR",
-  "EPID",
-  "ESCI",
-  "ETCE",
-  "ETEL",
-  "ETFS",
-  "ETGR",
-  "ETME",
-  "EXER",
-  "FARS",
-  "FILM",
-  "FINN",
-  "FLED",
-  "FRAN",
-  "FREN",
-  "FRST",
-  "GEOG",
-  "GEOL",
-  "GERM",
-  "GRAD",
-  "GRNT",
-  "HADM",
-  "HAHS",
-  "HCIP",
-  "HGHR",
-  "HHUM",
-  "HIST",
-  "HLTH",
-  "HONR",
-  "HPSY",
-  "HSMT",
-  "HSRD",
-  "HTAS",
-  "IBUS",
-  "IDST",
-  "INES",
-  "INFO",
-  "INST",
-  "INTE",
-  "INTL",
-  "ITCS",
-  "ITIS",
-  "ITLN",
-  "ITSC",
-  "JAPN",
-  "JOUR",
-  "KNES",
-  "LACS",
-  "LBST",
-  "LEGL",
-  "LTAM",
-  "MAED",
-  "MALS",
-  "MATH",
-  "MBAD",
-  "MDGK",
-  "MDLG",
-  "MDSK",
-  "MEGR",
-  "METR",
-  "MFPA",
-  "MGMT",
-  "MKTG",
-  "MPAD",
-  "MSCI",
-  "MSMG",
-  "MSRE",
-  "MUDD",
-  "MUED",
-];
+// Dashboard js
+console.log("Dashboard js is working");
 
-const resultBox = document.querySelector(".course-results");
-const searchBox = document.getElementById("course-search");
+// Function to handle button click
+function handleAddClassClick(button) {
+  const courseInfo = {
+    code: button.getAttribute("data-course-code"),
+    name: button.getAttribute("data-course-name"),
+    place: button.getAttribute("data-course-place"),
+    days: button.getAttribute("data-course-days"),
+    startTime: button.getAttribute("data-course-start-time"),
+    endTime: button.getAttribute("data-course-end-time"),
+    hasLab: button.getAttribute("data-course-has-lab"),
+    labDay: button.getAttribute("data-course-lab-day"),
+    labStartTime: button.getAttribute("data-course-lab-start-time"),
+    labEndTime: button.getAttribute("data-course-lab-end-time"),
+  };
 
-searchBox.onkeyup = function () {
-  let result = [];
-  let input = searchBox.value;
-  if (input.length) {
-    result = availableCourses.filter((keyword) => {
-      return keyword.toUpperCase().includes(input.toUpperCase());
+  // Use fetch to send a POST request to the '/add-class' endpoint
+  fetch("/add-class", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ courseInfo }),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      // Handle the response from the server
+      console.log(data.message);
+
+      // Close the modal or perform any other necessary actions
+      $("#addClassModal").modal("hide");
+    })
+    .catch((error) => {
+      // Handle the error
+      console.error("Error:", error);
     });
-  }
-};
-
-function display(result) {
-  const content = result.map((list) => {
-    return "<li>" + list + "<li>";
-  });
-  resultBox.innerHTML;
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+  // Add event listener to the body to catch all clicks
+  document.body.addEventListener("click", function (event) {
+    // Check if the clicked element has the class 'add-class-btn'
+    if (event.target.classList.contains("add-class-btn")) {
+      // Call the function to handle the button click
+      handleAddClassClick(event.target);
+    }
+  });
+});

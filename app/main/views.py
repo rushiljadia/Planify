@@ -1,7 +1,8 @@
 """For handling the views of the apps main functionality"""
-import json
-from flask import render_template, request, flash, redirect
-from flask_login import login_required
+from flask import render_template, request, flash, jsonify, session
+from flask_login import login_required, current_user
+from bson import ObjectId
+import re
 from . import main
 from .forms import AddCourseForm
 from ..extensions import mongo
@@ -35,6 +36,14 @@ def dashboard():
 
 
 def get_course_info(form):
+    """Gets the course information from the course adding form
+
+    Args:
+        form (Form): The class adding form to pull from
+
+    Returns:
+        dict: A dictionary structured to add to the databse
+    """
     # Getting the course name and formatting it to title case
     course_name = form.course_name.data.title()
     # Getting the course code and formmating it to all caps
@@ -133,3 +142,25 @@ def search():
         results = []
 
     return render_template("search_results.html", results=results)
+
+
+@main.route("/add-class", methods=["POST"])
+def add_class():
+    try:
+        course_info = request.get_json().get("courseInfo")
+
+        if course_info:
+            course_id = mongo.db.courses.find_one({"name": course_info["name"]})
+            query = {"name": current_user.username}
+            operation = {"$push": {"schedule": course_id}}
+
+            clean_days = re.sub("[\W_]+", "", course_info["days"])
+
+            mongo.db.users.find_one_and_update(query, operation)
+
+            return jsonify({"message": "Class added right"})
+        else:
+            return jsonify({"message": "error adding class"}), 400
+
+    except Exception as e:
+        return jsonify({"message": f"Error: {str(e)}"}), 500
