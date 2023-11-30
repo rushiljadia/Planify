@@ -3,7 +3,6 @@ from flask import Flask
 from config import Config
 from .main import main as main_blueprint
 from .auth import auth as auth_blueprint
-
 from .extensions import mongo, login_manager, bcrypt, bootstrap5
 
 

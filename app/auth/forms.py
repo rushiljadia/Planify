@@ -1,3 +1,5 @@
+"""Forms for the user login and registration pages
+"""
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField
 from wtforms.validators import DataRequired, Length, EqualTo

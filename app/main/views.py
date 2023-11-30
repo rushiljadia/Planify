@@ -1,3 +1,4 @@
+"""For handling the views of the apps main functionality"""
 from flask import render_template, request
 from flask_login import login_required
 from . import main
@@ -14,6 +15,14 @@ def index():
 @main.route("/dashboard", methods=["GET", "POST"])
 @login_required
 def dashboard():
+    """Handles the dashboard view of the app.
+    In this view a user can add classes to their schedule and search for
+    classes to add.
+    A login is required to use this page
+
+    Returns:
+        render_template: Rendering of the dashboard page
+    """
     form = AddCourseForm()
 
     if request.method == "POST":
