@@ -150,17 +150,63 @@ def add_class():
         course_info = request.get_json().get("courseInfo")
 
         if course_info:
-            course_id = mongo.db.courses.find_one({"name": course_info["name"]})
-            query = {"name": current_user.username}
-            operation = {"$push": {"schedule": course_id}}
+            course_id = mongo.db.courses.find_one({"name": course_info["name"]})["_id"]
 
-            clean_days = re.sub("[\W_]+", "", course_info["days"])
+            # Convert specified days to a list to ensure consistency
+            specified_days = course_info.get("days", [])
+            if not isinstance(specified_days, list):
+                specified_days = list(specified_days)
 
-            mongo.db.users.find_one_and_update(query, operation)
+            # Filter out unwanted characters from specified days
+            specified_days = [
+                day for day in specified_days if day in ["M", "T", "W", "R", "F"]
+            ]
 
-            return jsonify({"message": "Class added right"})
+            # Check for conflicts on all days in the user's schedule
+            user_schedule = mongo.db.users.find_one(
+                {"name": current_user.username}, {"schedule": 1}
+            )["schedule"]
+
+            for day, courses in user_schedule.items():
+                if day in specified_days:
+                    # Check for conflicts with courses on the same day
+                    if course_id in courses:
+                        return (
+                            jsonify(
+                                {"message": f"Conflict: Course already exists on {day}"}
+                            ),
+                            400,
+                        )
+                else:
+                    # Check for conflicts with courses on different days
+                    if course_id in courses:
+                        return (
+                            jsonify(
+                                {
+                                    "message": f"Conflict: Course already exists on a conflicting day ({day})"
+                                }
+                            ),
+                            400,
+                        )
+
+            # No conflicts detected, proceed to add the class for each day
+            for day in specified_days:
+                result = mongo.db.users.update_one(
+                    {
+                        "name": current_user.username,
+                        f"schedule.{day}": {"$nin": [course_id]},
+                    },
+                    {"$push": {f"schedule.{day}": {"$each": [course_id]}}},
+                )
+
+                if result.modified_count == 0:
+                    # Failed to add class for this day
+                    return jsonify({"message": f"Error adding class for {day}"}), 400
+
+            return jsonify({"message": "Class added successfully"})
+
         else:
-            return jsonify({"message": "error adding class"}), 400
+            return jsonify({"message": "Error: Missing courseInfo"}), 400
 
     except Exception as e:
         return jsonify({"message": f"Error: {str(e)}"}), 500
