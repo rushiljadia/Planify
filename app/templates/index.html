@@ -6,6 +6,15 @@
 <!-- Content -->
 {% block content %}
 
+
+<!-- Button to login -->
+<a class="btn btn-primary shadow w-100" href="/login" role="button"
+style="background-color: #D9D9D9; color: black; font-weight: bold; border: 2px solid black; border-radius: 10px;">Login</a>
+
+<!-- Button to sign up -->
+<a class="btn btn-primary shadow w-100" href="/sign-up" role="button"
+style="background-color: #D9D9D9; color: black; font-weight: bold; border: 2px solid black; border-radius: 10px;">Sign Up!</a>
+
 <!-- Action section -->
 <section
   class="h-100 d-flex flex-column align-items-center justify-content-center"
@@ -20,20 +29,18 @@
   >
     <!-- Button to dashboard -->
     <a class="btn btn-primary shadow w-100" href="/dashboard" role="button"
-      >Start Scheduling</a
+    style="background-color: #D9D9D9; color:black; font-weight: bold; border: 2px solid black; border-radius: 10px;">Start Scheduling</a
     >
     <!-- Button to sign up -->
     <a class="btn btn-primary shadow w-100" href="/sign-up" role="button"
-      >Sign Up!</a
-    >
+    style="background-color: #D9D9D9; color: black; font-weight: bold; border: 2px solid black; border-radius: 10px;">Sign Up!</a>
+
     <!-- Sign up information -->
+  
     <p class="font-weight-light">
       Registered users can save and create multiple schedules!
     </p>
-    <!-- Button to login -->
-    <a class="btn btn-primary shadow w-100" href="/login" role="button"
-      >Login</a
-    >
+    
   </div>
 </section>
 {% endblock %}
