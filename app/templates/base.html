@@ -51,11 +51,21 @@
           />
           <!-- Planify -->
         </a>
-        {% if current_user.is_authenticated %}
+        <!-- {% if current_user.is_authenticated %}
         <p class="text-muted me-2 mt-2 text-center">{{ session.username }}</p>
         {% else %}
         <p class="text-muted me-2 mt-2 text-center">Scheduling made easy</p>
-        {% endif %}
+        {% endif %} -->
+        <a
+          class="nav-link d-flex text-white"
+          href="../templates/auth/login.html"
+          >Login</a
+        >
+        <a
+          class="nav-link d-flex text-white"
+          href="../templates/auth/sign_up.html"
+          >Sign up</a
+        >
       </div>
       <!-- Container wrapper -->
       {% if current_user.is_authenticated %}
@@ -64,15 +74,14 @@
       >
       {% endif %}
     </nav>
-    <!-- Navbar -->
 
     {% block content %}{% endblock %}
 
     <section class="">
       <!-- Footer -->
       <footer
-        class="text-center text-white fixed-bottom"
-        style="background-color: #0a4275"
+        class="text-center text-black fixed-bottom"
+        style="background-color: #fff"
       >
         <!-- Copyright -->
         <div
@@ -80,7 +89,7 @@
           style="background-color: rgba(0, 0, 0, 0.2)"
         >
           © 2023 Copyright:
-          <a class="text-white" href="/">Planify.com</a>
+          <a class="text-black" href="/">Planify.com</a>
         </div>
         <!-- Copyright -->
       </footer>
