@@ -21,12 +21,12 @@
 <section
   class="h-100 d-flex flex-column align-items-center justify-content-center"
 >
-  <h1 class="cursive">Sign Up</h1>
+  <h1 class="text-center fw-bold fs-1">Sign Up</h1>
   <br />
   <div
-    class="h-50 d-flex flex-column justify-content-evenly border border-2 border-primary-subtle rounded p-5 shadow"
+    class="h-50 d-flex flex-column justify-content-evenly border border-3 border-black rounded-5 p-5 shadow intro-card"
   >
-    {% from 'bootstrap4/form.html' import render_form %}
+    {% from 'bootstrap4/form.html' import render_form%}
     <!-- Sign up form -->
     {{ render_form(form) }}
     <!-- End of if statement -->

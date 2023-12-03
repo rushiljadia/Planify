@@ -20,25 +20,26 @@
 <section
   class="h-100 d-flex flex-column align-items-center justify-content-center"
 >
-  <h1 class="cursive">Login</h1>
+  <h1 class="text-center fw-bold fs-1">Login</h1>
   <br />
   <div
-    class="h-50 d-flex flex-column justify-content-evenly border border-2 border-primary-subtle rounded p-5 shadow"
+    class="h-50 d-flex flex-column justify-content-evenly border border-3 border-black rounded-5 p-5 shadow intro-card"
   >
     <form method="POST">
       {{ form.hidden_tag() }}
       <!-- Username Label -->
-      {{ form.username.label(class="form-label") }}
+      {{ form.username.label(class="form-label fw-semibold") }}
       <!-- Form Username Box -->
       {{ form.username(class="form-control") }}
       <br />
       <!-- Password Label -->
-      {{ form.password.label(class="form-label") }}
+      {{ form.password.label(class="form-label fw-semibold") }}
       <!-- Form Password Box -->
       {{ form.password(class="form-control") }}
       <br />
       <!-- Form Submit -->
-      {{ form.submit(class="btn btn-primary") }}
+      {{ form.submit(class="btn btn-primary border-2 border-black text-black
+      fw-semibold buttons") }}
     </form>
   </div>
 </section>
