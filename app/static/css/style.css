@@ -26,3 +26,7 @@ body {
 .buttons {
   background-color: #6E7F6B;
 }
+
+#logoNav {
+  background-color: red;
+}
