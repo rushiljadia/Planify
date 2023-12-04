@@ -27,6 +27,11 @@ body {
   background-color: #6E7F6B;
 }
 
+nav .container {
+  margin: 0;
+  max-width: 100%;
+}
+
 #logoNav {
   background-color: red;
 }
