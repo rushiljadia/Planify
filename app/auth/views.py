@@ -81,7 +81,7 @@ def sign_up():
                 {
                     "name": username,
                     "password": password_hash,
-                    "schedules": [],
+                    "schedules": {},
                 }
             )
             # Updating the session for the now logged in user
