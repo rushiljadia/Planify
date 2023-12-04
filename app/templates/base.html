@@ -56,23 +56,25 @@
         {% else %}
         <p class="text-muted me-2 mt-2 text-center">Scheduling made easy</p>
         {% endif %} -->
-        <a
-          class="nav-link d-flex text-white fw-semibold"
-          href="{{ url_for('auth.login') }}"
-          >Login</a
-        >
-        <a
-          class="nav-link d-flex text-white fw-semibold"
-          href="{{ url_for('auth.sign_up') }}"
-          >Sign up</a
-        >
+        <div class="d-flex p-3">
+          <a
+            class="nav-link d-flex text-white fw-semibold pe-2"
+            href="{{ url_for('auth.login') }}"
+            >Login
+          </a>
+          <a
+            class="nav-link d-flex text-white fw-semibold ps-2"
+            href="{{ url_for('auth.sign_up') }}"
+            >Sign up</a
+          >
+          <!-- Container wrapper -->
+          {% if current_user.is_authenticated %}
+          <a href="/logout" class="btn btn-primary" tabindex="1"
+            ><span class="material-symbols-outlined"> logout </span></a
+          >
+          {% endif %}
+        </div>
       </div>
-      <!-- Container wrapper -->
-      {% if current_user.is_authenticated %}
-      <a href="/logout" class="btn btn-primary" tabindex="1"
-        ><span class="material-symbols-outlined"> logout </span></a
-      >
-      {% endif %}
     </nav>
 
     {% block content %}{% endblock %}
