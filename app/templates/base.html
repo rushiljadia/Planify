@@ -58,12 +58,12 @@
         {% endif %} -->
         <a
           class="nav-link d-flex text-white fw-semibold"
-          href="../templates/auth/login.html"
+          href="{{ url_for('auth.login') }}"
           >Login</a
         >
         <a
           class="nav-link d-flex text-white fw-semibold"
-          href="../templates/auth/sign_up.html"
+          href="{{ url_for('auth.sign_up') }}"
           >Sign up</a
         >
       </div>

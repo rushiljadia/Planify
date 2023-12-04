@@ -7,6 +7,7 @@ from app import create_app
 def app():
     app = create_app()
     app.config["TESTING"] = True
+    app.config["WTF_CSRF_ENABLED"] = False
 
     # Use mongomock for testing
     with app.app_context():

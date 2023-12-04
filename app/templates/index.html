@@ -17,13 +17,13 @@
     class="h-50 d-flex flex-column justify-content-evenly border border-3 border-black rounded-5 p-5 shadow intro-card"
   >
     <!-- Button to dashboard -->
-    <a class="btn btn-primary bg-white text-black fw-semibold border border-2 border-black w-100" href="/dashboard" role="button"
+    <a class="btn btn-primary bg-white text-black fw-semibold border border-2 border-black w-100" href="{{ url_for('main.dashboard') }}" role="button"
       >Start Scheduling</a
     >
     <!-- Button to sign up -->
     <a
       class="btn btn-primary bg-white text-black fw-semibold border border-2 border-black w-100"
-      href="/sign-up"
+      href="{{ url_for('auth.sign_up') }}"
       role="button"
       id="SignMeUp"
       >Sign Up!</a
@@ -32,7 +32,7 @@
     <!-- Sign up information -->
 
     <!-- Button to login -->
-    <a class="btn btn-primary bg-white text-black fw-semibold border border-2 border-black w-100" href="/login" role="button"
+    <a class="btn btn-primary bg-white text-black fw-semibold border border-2 border-black w-100" href="{{ url_for('auth.login') }}" role="button"
       >Login</a
     >
 
