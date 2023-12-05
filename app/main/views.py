@@ -1,7 +1,7 @@
 """For handling the views of the apps main functionality"""
 from flask import render_template, request, flash, jsonify, session
 from flask_login import login_required, current_user
-from bson import ObjectId
+from bson import ObjectId, json_util
 import re
 from . import main
 from .forms import AddCourseForm
@@ -212,53 +212,47 @@ def add_class():
         return jsonify({"message": f"Error: {str(e)}"}), 500
 
 
-@main.route("/get_schedule/<day>")
-def get_schedule(day):
-    # Retrieve classes for the specified day from the database
-    # Adjust the query based on your data model
-    courses = mongo.db.courses.find({"days": day.upper()})
+@main.route("/get-schedule", methods=["GET"])
+def get_schedule():
+    user_schedule = current_user.schedule
 
-    # Calculate top and height values for each course block
-    schedule_info = []
-    for course in courses:
-        # Adjust these calculations based on your time slot intervals and layout
-        top = calculate_top(course.start_time)
-        height = calculate_height(course.start_time, course.end_time)
+    # Convert ObjectId to string in each document
+    for key, value in user_schedule.items():
+        if "_id" in value:
+            value["_id"] = str(value["_id"])
 
-        schedule_info.append(
-            {
-                "name": course.name,
-                "time": f"{course.start_time} - {course.end_time}",
-                "location": course.place,
-                "top": f"{top}px",
-                "height": f"{height}px",
-            }
-        )
+    # Convert the dictionary to a list of dictionaries
+    schedule_list = [
+        {"day": day, "classes": classes} for day, classes in user_schedule.items()
+    ]
 
-    return jsonify(schedule_info)
+    # Use json_util.dumps to handle serialization of ObjectId
+    json_data = json_util.dumps(schedule_list)
+
+    # Return the JSON response
+    return json_data, 200, {"Content-Type": "application/json"}
 
 
-# Assuming you have a function to convert time to minutes
-def time_to_minutes(time_str):
-    hours, minutes = map(int, time_str.split(":"))
-    return hours * 60 + minutes
+@main.route("/get-course/<course_id>", methods=["GET"])
+def get_course(course_id):
+    # Assume you have a MongoDB collection named 'courses'
+    courses_collection = (
+        mongo.db.courses
+    )  # Replace 'db' with your actual MongoDB database object
 
+    try:
+        # Convert the course_id string to ObjectId
+        course_object_id = ObjectId(course_id)
 
-# Assuming you have a function to convert minutes to pixels
-def minutes_to_pixels(minutes):
-    # Adjust this value based on your layout
-    pixels_per_minute = 1.5
-    return minutes * pixels_per_minute
+        # Query the database to find the course by ObjectId
+        course = courses_collection.find_one({"_id": course_object_id})
 
+        if course:
+            # Return the course information as JSON
+            return jsonify(course)
+        else:
+            return jsonify({"error": "Course not found"}), 404
 
-# Function to calculate the top position based on start time
-def calculate_top(start_time):
-    start_minutes = time_to_minutes(start_time)
-    return minutes_to_pixels(start_minutes)
-
-
-# Function to calculate the height based on start and end time
-def calculate_height(start_time, end_time):
-    start_minutes = time_to_minutes(start_time)
-    end_minutes = time_to_minutes(end_time)
-    return minutes_to_pixels(end_minutes - start_minutes)
+    except Exception as e:
+        # Handle any exceptions that might occur during the database query
+        return jsonify({"error": str(e)}), 500
