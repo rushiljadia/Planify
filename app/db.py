@@ -6,8 +6,9 @@ from .extensions import mongo, login_manager
 class User:
     """Class for the user module"""
 
-    def __init__(self, username):
+    def __init__(self, username, schedule=None):
         self.username = username
+        self.schedule = schedule or {}
 
     @staticmethod
     def is_authenticated():
@@ -63,4 +64,4 @@ def load_user(username):
     if not u:
         return None
 
-    return User(username=u["name"])
+    return User(username=u["name"], schedule=u.get("schedule", {}))

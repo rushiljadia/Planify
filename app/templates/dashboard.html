@@ -68,15 +68,31 @@
   </div>
   <!-- Row -->
   <!-- Row -->
-
   <div class="row gx-2 justify-content-center">
-    <!-- Class Card -->
-    <div class="card text-center border-2" style="width: 10rem">
-      <div class="card-body">
-        <h5 class="card-title">Class One</h5>
+    <div id="displayForCalendar" class="mt-3">
+      <!-- Day Container -->
+      <div id="allDays" class="d-flex flex-row justify-content-around">
+        <hr />
+        {% for item in ["M","T","W","R","F"] %}
+        <div
+          class="p-3 flex-fill text-center m-1 day"
+          style="font-weight: bold; font-size: larger"
+        >
+          {{ item }}
+        </div>
+        {% endfor %}
+      </div>
+      {% for time_slot in [8,9,10,11,12,1,2,3,4,5,6,7,8] %}
+      <div id="lineNumber{{ time_slot }}">
+        <hr class="horLine" />
+        <div style="font-weight: bold">{{ time_slot }}</div>
+      </div>
+      {% endfor %}
+      <!-- Schedule Container -->
+      <div id="mondayCol">
+        <div id="courseBlock">Course Name</div>
       </div>
     </div>
-    <!-- Class Card -->
   </div>
 </div>
 
