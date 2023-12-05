@@ -67,3 +67,75 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+  // Execute this code when the DOM is fully loaded
+
+  // Make an AJAX call to fetch schedule data
+  fetch("/get-schedule")
+    .then((response) => response.json())
+    .then((data) => {
+      // Update the HTML with the fetched data
+      updateSchedule(data);
+    })
+    .catch((error) => {
+      console.error("Error fetching schedule data:", error);
+    });
+});
+
+// Function to update the schedule HTML
+function updateSchedule(data) {
+  console.log("Updating schedule with data:", data);
+
+  // Check if data is defined and is an object
+  if (data && typeof data === "object") {
+    // Iterate over each day and update the HTML
+    Object.keys(data).forEach((day) => {
+      const dayElement = document.getElementById(day);
+
+      if (dayElement) {
+        // Clear any existing content in the day element
+        dayElement.innerHTML = "";
+
+        // Check if classes is defined and an array
+        if (Array.isArray(data[day])) {
+          // Iterate over classes for the current day and append them to the HTML
+          data[day].forEach((classIdObject) => {
+            const classElement = document.createElement("div");
+
+            // Extract the ObjectId value from the classIdObject
+            const classIdString = classIdObject.$oid;
+
+            // Fetch course information by ID
+            fetch(`/get-course/${classIdString}`)
+              .then((response) => response.json())
+              .then((courseData) => {
+                // Check if courseData is defined and contains the expected properties
+                if (courseData && courseData.courseName) {
+                  // Update the classElement with course information
+                  classElement.innerHTML = `
+                    <p>${courseData.courseName}</p>
+                    <p>${classIdString}</p>
+                    <!-- Add more details as needed -->
+                  `;
+                  dayElement.appendChild(classElement);
+                } else {
+                  console.error(
+                    "Invalid or missing course information:",
+                    courseData
+                  );
+                }
+              })
+              .catch((error) => {
+                console.error("Error fetching course information:", error);
+              });
+          });
+        } else {
+          console.error("Invalid or missing 'classes' property for day:", day);
+        }
+      }
+    });
+  } else {
+    console.error("Invalid or undefined data:", data);
+  }
+}

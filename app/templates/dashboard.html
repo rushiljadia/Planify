@@ -34,7 +34,7 @@
 <!-- Message flashing-->
 
 <!-- Dahboard Page-->
-<h1 class="text-center cursive ">Dashboard</h1>
+<h1 class="text-center cursive">Dashboard</h1>
 <div class="container p-2">
   <!-- Row -->
   <div class="row gx-2 justify-content-center border border-2 rounded p-2">
@@ -69,30 +69,25 @@
   <!-- Row -->
   <!-- Row -->
   <div class="row gx-2 justify-content-center">
-    <div id="displayForCalendar" class="mt-3">
-      <!-- Day Container -->
-      <div id="allDays" class="d-flex flex-row justify-content-around">
-        <hr />
-        {% for item in ["M","T","W","R","F"] %}
-        <div
-          class="p-3 flex-fill text-center m-1 day"
-          style="font-weight: bold; font-size: larger"
-        >
-          {{ item }}
-        </div>
+    <!-- Schedule -->
+    <table class="table table-bordered table-success text-center shadow mt-2">
+      <thead>
+        <tr>
+          <th scope="col">Times</th>
+          {% for time in [8,9,10,11,12,1,2,3,4,5,6,7,8] %}
+          <th scope="col">{{ time }}</th>
+          {% endfor %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for day in ["M", "T", "W", "R", "F"] %}
+        <tr>
+          <th scope="row">{{ day }}</th>
+        </tr>
         {% endfor %}
-      </div>
-      {% for time_slot in [8,9,10,11,12,1,2,3,4,5,6,7,8] %}
-      <div id="lineNumber{{ time_slot }}">
-        <hr class="horLine" />
-        <div style="font-weight: bold">{{ time_slot }}</div>
-      </div>
-      {% endfor %}
-      <!-- Schedule Container -->
-      <div id="mondayCol">
-        <div id="courseBlock">Course Name</div>
-      </div>
-    </div>
+      </tbody>
+    </table>
+    <!-- Schedule -->
   </div>
 </div>
 
