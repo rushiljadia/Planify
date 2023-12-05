@@ -26,10 +26,10 @@ def dashboard():
         render_template: Rendering of the dashboard page
     """
     form = AddCourseForm()
+
     # Connection to the mongoDB course collection
     course_collection = mongo.db.courses
-
-    if request.method == "POST" and form.validate_on_submit:
+    if request.method == "POST" and form.validate_on_submit():
         add_course(form, course_collection)
 
     return render_template("dashboard.html", form=form)
@@ -210,3 +210,55 @@ def add_class():
 
     except Exception as e:
         return jsonify({"message": f"Error: {str(e)}"}), 500
+
+
+@main.route("/get_schedule/<day>")
+def get_schedule(day):
+    # Retrieve classes for the specified day from the database
+    # Adjust the query based on your data model
+    courses = mongo.db.courses.find({"days": day.upper()})
+
+    # Calculate top and height values for each course block
+    schedule_info = []
+    for course in courses:
+        # Adjust these calculations based on your time slot intervals and layout
+        top = calculate_top(course.start_time)
+        height = calculate_height(course.start_time, course.end_time)
+
+        schedule_info.append(
+            {
+                "name": course.name,
+                "time": f"{course.start_time} - {course.end_time}",
+                "location": course.place,
+                "top": f"{top}px",
+                "height": f"{height}px",
+            }
+        )
+
+    return jsonify(schedule_info)
+
+
+# Assuming you have a function to convert time to minutes
+def time_to_minutes(time_str):
+    hours, minutes = map(int, time_str.split(":"))
+    return hours * 60 + minutes
+
+
+# Assuming you have a function to convert minutes to pixels
+def minutes_to_pixels(minutes):
+    # Adjust this value based on your layout
+    pixels_per_minute = 1.5
+    return minutes * pixels_per_minute
+
+
+# Function to calculate the top position based on start time
+def calculate_top(start_time):
+    start_minutes = time_to_minutes(start_time)
+    return minutes_to_pixels(start_minutes)
+
+
+# Function to calculate the height based on start and end time
+def calculate_height(start_time, end_time):
+    start_minutes = time_to_minutes(start_time)
+    end_minutes = time_to_minutes(end_time)
+    return minutes_to_pixels(end_minutes - start_minutes)

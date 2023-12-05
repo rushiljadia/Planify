@@ -81,11 +81,17 @@ def sign_up():
                 {
                     "name": username,
                     "password": password_hash,
-                    "schedules": {},
+                    "schedule": {},
                 }
             )
+
+            user = mongo.db.users.find_one({"name": form.username.data})
+            user_obj = User(username=user["name"])
             # Updating the session for the now logged in user
             session["username"] = username
+            login_user(user_obj)
+
+            current_user.schedule = {}
             # Redirect the user back to their dashboard
             return redirect(url_for("main.dashboard"))
 
