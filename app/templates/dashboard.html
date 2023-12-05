@@ -69,25 +69,35 @@
   <!-- Row -->
   <!-- Row -->
   <div class="row gx-2 justify-content-center">
-    <!-- Schedule -->
-    <table class="table table-bordered table-success text-center shadow mt-2">
-      <thead>
-        <tr>
-          <th scope="col">Times</th>
-          {% for time in [8,9,10,11,12,1,2,3,4,5,6,7,8] %}
-          <th scope="col">{{ time }}</th>
-          {% endfor %}
-        </tr>
-      </thead>
-      <tbody>
-        {% for day in ["M", "T", "W", "R", "F"] %}
-        <tr>
-          <th scope="row">{{ day }}</th>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-    <!-- Schedule -->
+    <!-- Monday -->
+    <div class="col">
+      <h2 class="text-center">Monday</h2>
+      <div id="M-schedule"></div>
+    </div>
+
+    <!-- Tuesday -->
+    <div class="col">
+      <h2 class="text-center">Tuesday</h2>
+      <div id="T-schedule"></div>
+    </div>
+
+    <!-- Wednesday -->
+    <div class="col">
+      <h2 class="text-center">Wednesday</h2>
+      <div id="W-schedule"></div>
+    </div>
+
+    <!-- Thursday -->
+    <div class="col">
+      <h2 class="text-center">Thursday</h2>
+      <div id="R-schedule"></div>
+    </div>
+
+    <!-- Friday -->
+    <div class="col">
+      <h2 class="text-center">Friday</h2>
+      <div id="F-schedule"></div>
+    </div>
   </div>
 </div>
 
