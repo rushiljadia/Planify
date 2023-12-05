@@ -216,43 +216,46 @@ def add_class():
 def get_schedule():
     user_schedule = current_user.schedule
 
-    # Convert ObjectId to string in each document
-    for key, value in user_schedule.items():
-        if "_id" in value:
-            value["_id"] = str(value["_id"])
+    # Create a list to store the modified schedule data
+    modified_schedule = []
 
-    # Convert the dictionary to a list of dictionaries
-    schedule_list = [
-        {"day": day, "classes": classes} for day, classes in user_schedule.items()
-    ]
+    # Iterate over each day in the schedule
+    for day, class_ids in user_schedule.items():
+        # Fetch course information for each class ID
+        class_info_list = []
+        for class_id in class_ids:
+            # Convert ObjectId to string
+            class_id_str = str(class_id)
+
+            # Fetch course information from the 'courses' collection
+            course_data = get_course_data(class_id_str)
+
+            # Add course information to the list
+            class_info_list.append(course_data)
+
+        # Append day and class information to the modified schedule
+        modified_schedule.append({"day": day, "classes": class_info_list})
 
     # Use json_util.dumps to handle serialization of ObjectId
-    json_data = json_util.dumps(schedule_list)
+    json_data = json_util.dumps(modified_schedule)
 
     # Return the JSON response
     return json_data, 200, {"Content-Type": "application/json"}
 
 
 @main.route("/get-course/<course_id>", methods=["GET"])
-def get_course(course_id):
-    # Assume you have a MongoDB collection named 'courses'
-    courses_collection = (
-        mongo.db.courses
-    )  # Replace 'db' with your actual MongoDB database object
+def get_course_data(course_id):
+    # Fetch course information from the 'courses' collection
+    # You need to replace 'courses' with the actual name of your collection
+    course_data = mongo.db.courses.find_one({"_id": ObjectId(course_id)})
+    print(course_data["name"])
 
-    try:
-        # Convert the course_id string to ObjectId
-        course_object_id = ObjectId(course_id)
-
-        # Query the database to find the course by ObjectId
-        course = courses_collection.find_one({"_id": course_object_id})
-
-        if course:
-            # Return the course information as JSON
-            return jsonify(course)
-        else:
-            return jsonify({"error": "Course not found"}), 404
-
-    except Exception as e:
-        # Handle any exceptions that might occur during the database query
-        return jsonify({"error": str(e)}), 500
+    # Return relevant course information
+    if course_data:
+        return {
+            "_id": str(course_data["_id"]),
+            "courseName": course_data["name"]
+            # Add other relevant course information here
+        }
+    else:
+        return {}

@@ -87,51 +87,37 @@ document.addEventListener("DOMContentLoaded", function () {
 function updateSchedule(data) {
   console.log("Updating schedule with data:", data);
 
-  // Check if data is defined and is an object
-  if (data && typeof data === "object") {
+  // Check if data is defined and iterable
+  if (data && Array.isArray(data)) {
     // Iterate over each day and update the HTML
-    Object.keys(data).forEach((day) => {
-      const dayElement = document.getElementById(day);
+    data.forEach((dayData) => {
+      // Get the day's HTML element by ID
+      const dayElement = document.getElementById(`${dayData.day}-schedule`);
 
       if (dayElement) {
         // Clear any existing content in the day element
         dayElement.innerHTML = "";
 
-        // Check if classes is defined and an array
-        if (Array.isArray(data[day])) {
-          // Iterate over classes for the current day and append them to the HTML
-          data[day].forEach((classIdObject) => {
+        // Iterate over classes for the current day and append them to the HTML
+        if (Array.isArray(dayData.classes)) {
+          dayData.classes.forEach((classInfo) => {
             const classElement = document.createElement("div");
 
-            // Extract the ObjectId value from the classIdObject
-            const classIdString = classIdObject.$oid;
-
             // Fetch course information by ID
-            fetch(`/get-course/${classIdString}`)
+            fetch(`/get-course/${classInfo._id}`)
               .then((response) => response.json())
               .then((courseData) => {
-                // Check if courseData is defined and contains the expected properties
-                if (courseData && courseData.courseName) {
-                  // Update the classElement with course information
-                  classElement.innerHTML = `
-                    <p>${courseData.courseName}</p>
-                    <p>${classIdString}</p>
-                    <!-- Add more details as needed -->
-                  `;
-                  dayElement.appendChild(classElement);
-                } else {
-                  console.error(
-                    "Invalid or missing course information:",
-                    courseData
-                  );
-                }
+                // Update the classElement with course information
+                classElement.innerHTML = `
+                  <p>${courseData.courseName}</p>
+                  <!-- Add more details as needed -->
+                `;
+                dayElement.appendChild(classElement);
               })
               .catch((error) => {
                 console.error("Error fetching course information:", error);
               });
           });
-        } else {
-          console.error("Invalid or missing 'classes' property for day:", day);
         }
       }
     });
