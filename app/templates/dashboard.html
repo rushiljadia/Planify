@@ -39,7 +39,7 @@
   <!-- Row -->
   <table id="make-schedule">
     <tr>
-      <th class="col-1"> 
+      <th class="col-1">
         <label for="select-schedule">Choose a Schedule</label>
         <select name="schedules" id="select-schedule">
           <option value="schedule-1">Schedule 1</option>
@@ -59,37 +59,24 @@
           placeholder="Search for courses"
           hx-get="/search"
           hx-trigger="keyup changed delay:500ms"
-          hx-target="#courses"/>
+          hx-target="#courses"
+        />
       </td>
     </tr>
     <tr>
-      <th class="col-1"> Class Section:</th>
+      <th class="col-1">Class Section:</th>
       <td class="col-2">
         <!-- Class Scroll Container -->
-        <div class="container-fluid py-2 border border-2 border-black rounded"
-          id="class-cards-container">
+        <div
+          class="container-fluid py-2 border border-2 border-black rounded"
+          id="class-cards-container"
+        >
           <!-- Class Scroll Card Container -->
           <div class="d-flex flex-row flex-nowrap overflow-auto" id="courses">
             <!-- This is where search results will be displayed -->
           </div>
         </div>
       </td>
-    </tr>
-    <tr>
-      <th class="col-1">Course Number:</th>
-      <td class="col-2"><input type="number" min="0000" max="9999" name="course_number" title="Enter a Course # (4 Only)"></td>
-    </tr>
-    <tr>
-      <th class="col-1">Class Section:</th>
-      <td class="col-2"><input type="number" min="000" max="999" name="section"></td>
-    </tr>
-    <tr>
-      <th class="col-1">Start Time:</th>
-      <td class="col-2"><input type="time" name="start_time" required></td>
-    </tr>
-    <tr>
-      <th class="col-1">End Time:</th>
-      <td class="col-2"><input type="time" name="end_time" required></td>
     </tr>
   </table>
 
@@ -114,8 +101,6 @@
     <div class="first-row"></div>
     <div class="first-row">6pm</div>
   </div>
-
-  
   
   <!-- Modal -->
   <div
@@ -158,23 +143,18 @@
           </form>
         </div>
 
-        <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-secondary"
-            data-bs-dismiss="modal"
-          >
-            Close
-          </button>
-        </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
       </div>
     </div>
   </div>
-  <!-- Modal -->
-
-  <!-- Scripts -->
-
-  <script src="{{url_for('static', filename='js/dashboard.js')}}"></script>
-  <script type="module" src="static/js/map.js"></script>
-  {% endblock %}
 </div>
+<!-- Modal -->
+
+<!-- Scripts -->
+
+<script src="{{url_for('static', filename='js/dashboard.js')}}"></script>
+<script type="module" src="static/js/map.js"></script>
+{% endblock %}

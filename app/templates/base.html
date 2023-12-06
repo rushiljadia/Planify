@@ -50,11 +50,7 @@
           />
           <!-- Planify -->
         </a>
-        <!-- {% if current_user.is_authenticated %}
-        <p class="text-muted me-2 mt-2 text-center">{{ session.username }}</p>
-        {% else %}
-        <p class="text-muted me-2 mt-2 text-center">Scheduling made easy</p>
-        {% endif %} -->
+        {% if not current_user.is_authenticated %}
         <div class="d-flex p-3">
           <a
             class="nav-link d-flex text-white fw-semibold pe-2 fs-5"
@@ -67,7 +63,7 @@
             >Sign up</a
           >
           <!-- Container wrapper -->
-          {% if current_user.is_authenticated %}
+          {% else %}
           <a href="/logout" class="btn btn-primary" tabindex="1"
             ><span class="material-symbols-outlined"> logout </span></a
           >
