@@ -35,3 +35,89 @@ nav .container {
 #logoNav {
   background-color: red;
 }
+
+.grid{  
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: repeat(6, 1fr);
+
+  min-height: 400px;
+  height: 70vw;
+  max-height: 600px;
+
+  background-color: white;
+  border: black;
+  border-style: solid;
+}
+
+.first-col{
+  grid-column: 1;
+
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  border-right: solid black;
+  border-bottom: solid black;
+}
+
+.first-row{
+  grid-row: 1;
+
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  border-bottom: solid black;
+}
+
+/* table{
+  border-style: none;
+  border-width: 0;
+  background-color: white;
+}
+
+tbody,tr{
+  border-style: none;
+} */
+
+#make-schedule{
+  display: table;
+  width: 100%;
+  margin-bottom: 3rem;
+  background-color: white;
+  border: black;
+  border-style: solid;
+}
+
+.col-1{
+  width:30%;
+}
+
+.col-2{
+  width:70%;
+}
+
+th, td{
+  padding: .6rem;
+}
+
+input{
+  background-color: #A69361;
+  border-style: none;
+  padding: .6rem;
+}
+
+#select-schedule{
+  background-color: #A69361;
+}
+
+.full-col{
+  width:100%;
+}
+
+#class-cards-container{  
+  background-color: #A69361;
+}

@@ -37,72 +37,84 @@
 <h1 class="text-center fw-bold p-3">Create a Schedule!</h1>
 <div class="container p-2">
   <!-- Row -->
-  <div
-    class="row gx-2 justify-content-center border border-2 border-black rounded p-2 intro-card"
-  >
-    <!-- Search bar -->
-    <div class="input-group rounded mb-2" style="width: 15rem">
-      <input
-        type="search"
-        class="form-control rounded"
-        aria-label="Search"
-        aria-describedby="search-addon"
-        name="q"
-        placeholder="Search for courses"
-        hx-get="/search"
-        hx-trigger="keyup changed delay:500ms"
-        hx-target="#courses"
-      />
-      <span class="input-group-text border-0" id="search-addon">
-        <i class="fas fa-search"></i>
-      </span>
-    </div>
+  <table id="make-schedule">
+    <tr>
+      <th class="col-1"> 
+        <label for="select-schedule">Choose a Schedule</label>
+        <select name="schedules" id="select-schedule">
+          <option value="schedule-1">Schedule 1</option>
+          <option value="schedule-2">Schedule 2</option>
+          <option value="schedule-3">Schedule 3</option>
+        </select>
+      </th>
+    </tr>
+    <tr>
+      <td colspan="2" style="width: 90">
+        <input
+          type="search"
+          class="form-control rounded"
+          aria-label="Search"
+          aria-describedby="search-addon"
+          name="q"
+          placeholder="Search for courses"
+          hx-get="/search"
+          hx-trigger="keyup changed delay:500ms"
+          hx-target="#courses"/>
+      </td>
+    </tr>
+    <tr>
+      <th class="col-1"> Class Section:</th>
+      <td class="col-2">
+        <!-- Class Scroll Container -->
+        <div class="container-fluid py-2 border border-2 border-black rounded"
+          id="class-cards-container">
+          <!-- Class Scroll Card Container -->
+          <div class="d-flex flex-row flex-nowrap overflow-auto" id="courses">
+            <!-- This is where search results will be displayed -->
+          </div>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <th class="col-1">Course Number:</th>
+      <td class="col-2"><input type="number" min="0000" max="9999" name="course_number" title="Enter a Course # (4 Only)"></td>
+    </tr>
+    <tr>
+      <th class="col-1">Class Section:</th>
+      <td class="col-2"><input type="number" min="000" max="999" name="section"></td>
+    </tr>
+    <tr>
+      <th class="col-1">Start Time:</th>
+      <td class="col-2"><input type="time" name="start_time" required></td>
+    </tr>
+    <tr>
+      <th class="col-1">End Time:</th>
+      <td class="col-2"><input type="time" name="end_time" required></td>
+    </tr>
+  </table>
 
-    <!--Upper Table-->
-
-    <!-- Class Scroll Container -->
-    <div
-      class="container-fluid py-2 border border-2 border-black rounded"
-      id="class-cards-container"
-    >
-      <!-- Class Scroll Card Container -->
-      <div class="d-flex flex-row flex-nowrap overflow-auto" id="courses">
-        <!-- This is where search results will be displayed -->
-      </div>
-    </div>
+  <div class="grid">
+    
+    <div class="first-col">Monday</div>
+    <div class="first-col">Tuesday</div>
+    <div class="first-col">Wednesday</div>
+    <div class="first-col">Thursday</div>
+    <div class="first-col">Friday</div>
+    
+    <div class="first-row">Time</div>
+    <div class="first-row">8am</div>
+    <div class="first-row"></div>
+    <div class="first-row">10am</div>
+    <div class="first-row"></div>
+    <div class="first-row">12pm</div>
+    <div class="first-row"></div>
+    <div class="first-row">2pm</div>
+    <div class="first-row"></div>
+    <div class="first-row">4pm</div>
+    <div class="first-row"></div>
+    <div class="first-row">6pm</div>
   </div>
-  <!-- Row -->
-  <br /><br /><br /><br />
-  <!-- Schedule Format -->
-  <div class="container text-center">
-    <div class="row">
-      <div class="col-2">Time</div>
-      <div class="col-1">6am</div>
-      <div class="col-1">8am</div>
-      <div class="col-1">10am</div>
-      <div class="col-1">12pm</div>
-      <div class="col-1">2pm</div>
-      <div class="col-1">4pm</div>
-      <div class="col-1">6pm</div>
-      <div class="col-1">8pm</div>
-      <div class="col-1">10pm</div>
-    </div>
-    <div class="row border border-2 border-black rounded-5 bg-white">
-      <div class="col-2 border border-1 border-black p-4 fw-bold">Monday</div>
-      <div class="col-10 border border-1 border-black p-4"></div>
-      <div class="col-2 border border-1 border-black p-4 fw-bold">Tuesday</div>
-      <div class="col-10 border border-1 border-black p-4"></div>
-      <div class="col-2 border border-1 border-black p-4 fw-bold">
-        Wednesday
-      </div>
-      <div class="col-10 border border-1 border-black p-4"></div>
-      <div class="col-2 border border-1 border-black p-4 fw-bold">Thursday</div>
-      <div class="col-10 border border-1 border-black p-4"></div>
-      <div class="col-2 border border-1 border-black p-4 fw-bold">Friday</div>
-      <div class="col-10 border border-1 border-black p-4"></div>
-    </div>
-  </div>
-
+  
   <!-- Modal -->
   <div
     class="modal fade intro-card"
