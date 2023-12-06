@@ -79,69 +79,58 @@
       </td>
     </tr>
   </table>
+</div>
 
-  <div class="grid">
-    
-    <div class="first-col">Monday</div>
-    <div class="first-col">Tuesday</div>
-    <div class="first-col">Wednesday</div>
-    <div class="first-col">Thursday</div>
-    <div class="first-col">Friday</div>
-    
-    <div class="first-row">Time</div>
-    <div class="first-row">8am</div>
-    <div class="first-row"></div>
-    <div class="first-row">10am</div>
-    <div class="first-row"></div>
-    <div class="first-row">12pm</div>
-    <div class="first-row"></div>
-    <div class="first-row">2pm</div>
-    <div class="first-row"></div>
-    <div class="first-row">4pm</div>
-    <div class="first-row"></div>
-    <div class="first-row">6pm</div>
+<div class="container">
+  <div class="row">
+    {% for day in ["M","T","W","R","F"]%}
+    <div class="col">
+      <h3>{{ day }}</h3>
+    </div>
+    {% endfor %}
   </div>
-  
-  <!-- Modal -->
-  <div
-    class="modal fade intro-card"
-    id="addClassModal"
-    tabindex="-1"
-    aria-labelledby="addClassModalLabel"
-    aria-hidden="true"
-  >
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="addClassModalLabel">Add A New Class</h5>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
-        </div>
-        <div class="modal-body">
-          {% from 'bootstrap5/form.html' import render_form_row %}
-          <form method="POST">
-            <!-- form row -->
-            {{ render_form_row([form.course_name]) }}
-            <!-- form row -->
-            {{ render_form_row([form.course_code, form.course_number]) }}
-            <!-- form row -->
-            {{ render_form_row([form.place]) }}
-            <!-- form row -->
-            {{ render_form_row([form.days]) }}
-            <!-- form row -->
-            {{ render_form_row([form.start_time, form.end_time]) }}
-            <!-- form row -->
-            {{ render_form_row([form.has_lab, form.lab_day]) }}
-            <!-- form row -->
-            {{ render_form_row([form.lab_start_time, form.lab_end_time]) }}
-            <!-- form row -->
-            {{ render_form_row([form.add_course]) }}
-          </form>
-        </div>
+</div>
+
+<!-- Modal -->
+<div
+  class="modal fade intro-card"
+  id="addClassModal"
+  tabindex="-1"
+  aria-labelledby="addClassModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addClassModalLabel">Add A New Class</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        {% from 'bootstrap5/form.html' import render_form_row %}
+        <form method="POST">
+          <!-- form row -->
+          {{ render_form_row([form.course_name]) }}
+          <!-- form row -->
+          {{ render_form_row([form.course_code, form.course_number]) }}
+          <!-- form row -->
+          {{ render_form_row([form.place]) }}
+          <!-- form row -->
+          {{ render_form_row([form.days]) }}
+          <!-- form row -->
+          {{ render_form_row([form.start_time, form.end_time]) }}
+          <!-- form row -->
+          {{ render_form_row([form.has_lab, form.lab_day]) }}
+          <!-- form row -->
+          {{ render_form_row([form.lab_start_time, form.lab_end_time]) }}
+          <!-- form row -->
+          {{ render_form_row([form.add_course]) }}
+        </form>
+      </div>
 
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
