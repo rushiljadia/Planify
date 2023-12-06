@@ -37,7 +37,9 @@
 <h1 class="text-center fw-bold p-3">Create a Schedule!</h1>
 <div class="container p-2">
   <!-- Row -->
-  <div class="row gx-2 justify-content-center border border-2 rounded p-2">
+  <div
+    class="row gx-2 justify-content-center border border-2 border-black rounded p-2 intro-card"
+  >
     <!-- Search bar -->
     <div class="input-group rounded mb-2" style="width: 15rem">
       <input
@@ -60,7 +62,7 @@
 
     <!-- Class Scroll Container -->
     <div
-      class="container-fluid py-2 border border-2 rounded"
+      class="container-fluid py-2 border border-2 border-black rounded"
       id="class-cards-container"
     >
       <!-- Class Scroll Card Container -->
@@ -70,109 +72,95 @@
     </div>
   </div>
   <!-- Row -->
-  <!-- Row -->
-  <div class="row gx-2 justify-content-center">
-    <!-- Monday -->
-    <div class="col">
-      <h2 class="text-center">Monday</h2>
-      <div id="M-schedule"></div>
+  <br /><br /><br /><br />
+  <!-- Schedule Format -->
+  <div class="container text-center">
+    <div class="row">
+      <div class="col-2">Time</div>
+      <div class="col-1">6am</div>
+      <div class="col-1">8am</div>
+      <div class="col-1">10am</div>
+      <div class="col-1">12pm</div>
+      <div class="col-1">2pm</div>
+      <div class="col-1">4pm</div>
+      <div class="col-1">6pm</div>
+      <div class="col-1">8pm</div>
+      <div class="col-1">10pm</div>
     </div>
-
-    <!-- Tuesday -->
-    <div class="col">
-      <h2 class="text-center">Tuesday</h2>
-      <div id="T-schedule"></div>
-    </div>
-
-    <!-- Thursday -->
-    <div class="col">
-      <h2 class="text-center">Thursday</h2>
-      <div id="R-schedule"></div>
-    </div>
-
-    <!-- Wednesday -->
-    <div class="col">
-      <h2 class="text-center">Wednesday</h2>
-      <div id="W-schedule"></div>
-    </div>
-
-    <!-- Friday -->
-    <div class="col">
-      <h2 class="text-center">Friday</h2>
-      <div id="F-schedule"></div>
+    <div class="row border border-2 border-black rounded-5 bg-white">
+      <div class="col-2 border border-1 border-black p-4 fw-bold">Monday</div>
+      <div class="col-10 border border-1 border-black p-4"></div>
+      <div class="col-2 border border-1 border-black p-4 fw-bold">Tuesday</div>
+      <div class="col-10 border border-1 border-black p-4"></div>
+      <div class="col-2 border border-1 border-black p-4 fw-bold">
+        Wednesday
+      </div>
+      <div class="col-10 border border-1 border-black p-4"></div>
+      <div class="col-2 border border-1 border-black p-4 fw-bold">Thursday</div>
+      <div class="col-10 border border-1 border-black p-4"></div>
+      <div class="col-2 border border-1 border-black p-4 fw-bold">Friday</div>
+      <div class="col-10 border border-1 border-black p-4"></div>
     </div>
   </div>
-</div>
 
-<!-- Schedule Format -->
-<div class="container text-center">
-  <div class="row">
-    <div class="col-4">Monday</div>
-    <div class="col-8"></div>
-    <div class="col-4">Tuesday</div>
-    <div class="col-8"></div>
-    <div class="col-4">Wednesday</div>
-    <div class="col-8"></div>
-    <div class="col-4">Thursday</div>
-    <div class="col-8"></div>
-    <div class="col-4">Friday</div>
-    <div class="col-8"></div>
-  </div>
-</div>
+  <!-- Modal -->
+  <div
+    class="modal fade intro-card"
+    id="addClassModal"
+    tabindex="-1"
+    aria-labelledby="addClassModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addClassModalLabel">Add A New Class</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          {% from 'bootstrap5/form.html' import render_form_row %}
+          <form method="POST">
+            <!-- form row -->
+            {{ render_form_row([form.course_name]) }}
+            <!-- form row -->
+            {{ render_form_row([form.course_code, form.course_number]) }}
+            <!-- form row -->
+            {{ render_form_row([form.place]) }}
+            <!-- form row -->
+            {{ render_form_row([form.days]) }}
+            <!-- form row -->
+            {{ render_form_row([form.start_time, form.end_time]) }}
+            <!-- form row -->
+            {{ render_form_row([form.has_lab, form.lab_day]) }}
+            <!-- form row -->
+            {{ render_form_row([form.lab_start_time, form.lab_end_time]) }}
+            <!-- form row -->
+            {{ render_form_row([form.add_course]) }}
+          </form>
+        </div>
 
-<!-- Modal -->
-<div
-  class="modal fade"
-  id="addClassModal"
-  tabindex="-1"
-  aria-labelledby="addClassModalLabel"
-  aria-hidden="true"
->
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="addClassModalLabel">Add A New Class</h5>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
-      </div>
-      <div class="modal-body">
-        {% from 'bootstrap5/form.html' import render_form_row %}
-        <form method="POST">
-          <!-- form row -->
-          {{ render_form_row([form.course_name]) }}
-          <!-- form row -->
-          {{ render_form_row([form.course_code, form.course_number]) }}
-          <!-- form row -->
-          {{ render_form_row([form.place]) }}
-          <!-- form row -->
-          {{ render_form_row([form.days]) }}
-          <!-- form row -->
-          {{ render_form_row([form.start_time, form.end_time]) }}
-          <!-- form row -->
-          {{ render_form_row([form.has_lab, form.lab_day]) }}
-          <!-- form row -->
-          {{ render_form_row([form.lab_start_time, form.lab_end_time]) }}
-          <!-- form row -->
-          {{ render_form_row([form.add_course]) }}
-        </form>
-      </div>
-
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-          Close
-        </button>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
+        </div>
       </div>
     </div>
   </div>
+  <!-- Modal -->
+
+  <!-- Scripts -->
+
+  <script src="{{url_for('static', filename='js/dashboard.js')}}"></script>
+  <script type="module" src="static/js/map.js"></script>
+  {% endblock %}
 </div>
-<!-- Modal -->
-
-<!-- Scripts -->
-
-<script src="{{url_for('static', filename='js/dashboard.js')}}"></script>
-<script type="module" src="static/js/map.js"></script>
-{% endblock %}
