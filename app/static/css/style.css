@@ -8,7 +8,18 @@ body {
 
 .cursive {
   font-family: "Pacifico";
-  font-size: 4rem;
+  font-size: 4rem;.time-line {
+  border-top: 1px solid #ddd;
+  margin-top: 5px;
+  padding-top: 5px;
+}
+
+.time-slot {
+  display: inline-block;
+  width: 50px;
+  text-align: center;
+}
+
 }
 
 #map {
@@ -36,6 +47,7 @@ nav .container {
   background-color: red;
 }
 
+/* Grid */
 .grid{  
   display: grid;
   grid-template-columns: repeat(12, 1fr);
@@ -121,3 +133,4 @@ input{
 #class-cards-container{  
   background-color: #A69361;
 }
+
