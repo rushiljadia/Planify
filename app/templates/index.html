@@ -16,10 +16,9 @@
   <div
     class="h-50 d-flex flex-column justify-content-evenly border border-3 border-black rounded-5 p-5 shadow intro-card"
   >
-    <!-- Button to dashboard -->
-    <a class="btn btn-primary bg-white text-black fw-semibold border border-2 border-black w-100" href="{{ url_for('main.dashboard') }}" role="button"
-      >Start Scheduling</a
-    >
+  
+
+    {% if not current_user.is_authenticated %}
     <!-- Button to sign up -->
     <a
       class="btn btn-primary bg-white text-black fw-semibold border border-2 border-black w-100"
@@ -28,9 +27,6 @@
       id="SignMeUp"
       >Sign Up!</a
     >
-
-    <!-- Sign up information -->
-
     <!-- Button to login -->
     <a class="btn btn-primary bg-white text-black fw-semibold border border-2 border-black w-100" href="{{ url_for('auth.login') }}" role="button"
       >Login</a
@@ -39,6 +35,23 @@
     <p class="font-weight-light">
       Registered users can save and create multiple schedules!
     </p>
+    {% else %}
+    <h4 class="text-center fw-normal fw-semibold fst-italic">
+      Welcome {{ current_user.username.title() }}!
+    </h4>
+    <!-- Button to dashboard -->
+    <a 
+    class="btn btn-light border border-2 border-black w-100"
+    href="{{ url_for('main.dashboard') }}" 
+    role="button"
+      >Start Scheduling</a
+    >
+    
+    {% endif %}
+
+    <!-- Sign up information -->
+
+
   </div>
 </section>
 {% endblock %}

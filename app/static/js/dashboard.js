@@ -69,8 +69,6 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 document.addEventListener("DOMContentLoaded", function () {
-  // Execute this code when the DOM is fully loaded
-
   // Make an AJAX call to fetch schedule data
   fetch("/get-schedule")
     .then((response) => response.json())
@@ -96,12 +94,17 @@ function updateSchedule(data) {
 
       if (dayElement) {
         // Clear any existing content in the day element
-        dayElement.innerHTML = "";
+        dayElement.innerHTML = `
+          <div class="col border text-center" style="width: 50px;">
+            <h3>${dayData.day}</h3>
+          </div>
+        `;
 
         // Iterate over classes for the current day and append them to the HTML
         if (Array.isArray(dayData.classes)) {
           dayData.classes.forEach((classInfo) => {
             const classElement = document.createElement("div");
+            classElement.className = "col";
 
             // Fetch course information by ID
             fetch(`/get-course/${classInfo._id}`)
@@ -109,8 +112,16 @@ function updateSchedule(data) {
               .then((courseData) => {
                 // Update the classElement with course information
                 classElement.innerHTML = `
-                  <p>${courseData.courseName}</p>
-                  <!-- Add more details as needed -->
+                  <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                      <h5 class="card-title">${courseData.courseCode}</h5>
+                      <h6 class="card-subtitle mb-2 text-body-secondary">
+                        ${courseData.courseName} 
+                      </h6>
+                      <p class="card-text">${courseData.coursePlace}</p> 
+                      <p class="card-text">${courseData.startTime} - ${courseData.endTime}</p> 
+                    </div>
+                  </div>
                 `;
                 dayElement.appendChild(classElement);
               })

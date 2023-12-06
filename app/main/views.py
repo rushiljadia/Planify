@@ -254,8 +254,11 @@ def get_course_data(course_id):
     if course_data:
         return {
             "_id": str(course_data["_id"]),
-            "courseName": course_data["name"]
-            # Add other relevant course information here
+            "courseName": course_data["name"],
+            "coursePlace": course_data["place"],
+            "startTime": course_data["start"],
+            "endTime": course_data["end"],
+            "courseCode": course_data["code"],
         }
     else:
         return {}
