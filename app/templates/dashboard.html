@@ -133,7 +133,16 @@
           {{ render_form_row([form.lab_end_time]) }}
           <!-- End Course Lab Section Inputs -->
       </td>
-  </tr>
+    </tr>
+    <tr>
+      <th class="col-1"> </th>
+      <td class="col-2">
+          <!-- Submit Button -->
+          {% from 'bootstrap5/form.html' import render_form_row %}
+          {{ render_form_row([form.add_course]) }}
+          <!-- End Submit Button -->
+      </td>
+    </tr>
   </table>
 
   <div class="grid">
