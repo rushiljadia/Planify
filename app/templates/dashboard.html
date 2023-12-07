@@ -49,6 +49,8 @@
         <span class="input-group-text" id="addon-wrapping">
           <span class="material-symbols-outlined"> search </span>
         </span>
+
+
         <input
           type="search"
           class="form-control"
@@ -144,17 +146,24 @@
         </form>
       </div>
 
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-          Close
-        </button>
+
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
+        </div>
       </div>
     </div>
   </div>
+  <!-- Modal -->
+
+  <!-- Scripts -->
+
+  <script src="{{url_for('static', filename='js/dashboard.js')}}"></script>
+  <script type="module" src="static/js/map.js"></script>
+  {% endblock %}
 </div>
-<!-- Modal -->
-
-<!-- Scripts -->
-
-<script src="{{url_for('static', filename='js/dashboard.js')}}"></script>
-{% endblock %}
