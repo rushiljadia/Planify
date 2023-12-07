@@ -95,6 +95,7 @@ tbody,tr{
   border-style: none;
 } */
 
+/* table layout for schedule */
 #make-schedule{
   display: table;
   width: 100%;
@@ -133,4 +134,22 @@ input{
 #class-cards-container{  
   background-color: #A69361;
 }
+
+
+/* Horizontal Course Selection*/
+.horizontal-dropdown {
+  display: flex;
+  flex-direction: row;
+}
+
+.horizontal-dropdown option {
+  margin-right: 10px; /* Add some spacing between options */
+}
+
+.horizontal-dropdown select {
+  width: auto;
+  min-width: 200px;
+}
+
+
 

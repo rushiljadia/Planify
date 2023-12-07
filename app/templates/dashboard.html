@@ -40,8 +40,9 @@
   <table id="make-schedule">
     <tr>
       <th class="col-1"> 
-        <label for="select-schedule">Choose a Schedule</label>
+        <label for="select-schedule" aria-label="Third navbar example">Choose a Schedule</label>
         <select name="schedules" id="select-schedule">
+          <li>1</li>
           <option value="schedule-1">Schedule 1</option>
           <option value="schedule-2">Schedule 2</option>
           <option value="schedule-3">Schedule 3</option>
@@ -66,15 +67,33 @@
       <th class="col-1"> Class Section:</th>
       <td class="col-2">
         <!-- Class Scroll Container -->
-        <div class="container-fluid py-2 border border-2 border-black rounded"
-          id="class-cards-container">
+        <div class="container-fluid py-2 border border-2 border-black rounded" id="class-cards-container">
           <!-- Class Scroll Card Container -->
           <div class="d-flex flex-row flex-nowrap overflow-auto" id="courses">
-            <!-- This is where search results will be displayed -->
+            <!-- Horizontal Dropdown Menu -->
+            <select multiple class="form-select horizontal-dropdown" aria-label="Select Courses">
+              <option value="ITIS" class="bg-warning text-white">ITIS</option>
+              <option value="ITCS" class="bg-danger text-white">ITCS</option>
+              <option value="MATH" class="bg-info text-white">MATH</option>
+              <option value="STAT" class="bg-danger text-white">STAT</option>
+              <option value="ENGL" class="bg-success text-white">ENGL</option>
+              <option value="ITSC" class="bg-info text-white">ITSC</option>
+              <option value="PHYS" class="bg-primary text-white">PHYS</option>
+              <option value="CHEM" class="bg-secondary text-white">CHEM</option>
+              <option value="BIOE" class="bg-dark text-white">BIOE</option>
+            </select>
+            <!-- End Horizontal Dropdown Menu -->
           </div>
         </div>
       </td>
     </tr>
+    
+    
+    
+    
+    
+    
+    
     <tr>
       <th class="col-1">Course Number:</th>
       <td class="col-2"><input type="number" min="0000" max="9999" name="course_number" title="Enter a Course # (4 Only)"></td>
