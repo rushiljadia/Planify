@@ -29,7 +29,7 @@ def dashboard():
 
     # Connection to the mongoDB course collection
     course_collection = mongo.db.courses
-    if request.method == "POST" and form.validate_on_submit():
+    if request.method == "POST":
         add_course(form, course_collection)
 
     return render_template("dashboard.html", form=form)
@@ -148,6 +148,7 @@ def search():
 def add_class():
     try:
         course_info = request.get_json().get("courseInfo")
+        print(course_info)
 
         if course_info:
             course_id = mongo.db.courses.find_one({"name": course_info["name"]})["_id"]
@@ -248,7 +249,6 @@ def get_course_data(course_id):
     # Fetch course information from the 'courses' collection
     # You need to replace 'courses' with the actual name of your collection
     course_data = mongo.db.courses.find_one({"_id": ObjectId(course_id)})
-    print(course_data["name"])
 
     # Return relevant course information
     if course_data:

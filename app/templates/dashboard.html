@@ -33,181 +33,119 @@
 {% endwith %}
 <!-- Message flashing-->
 
+<!-- Loading animation element -->
+<div id="loadingAnimation" class="loading-animation">
+  <!-- Add your loading animation content here, e.g., a spinner or a message -->
+  Loading...
+</div>
+
 <!-- Dahboard Page-->
 <h1 class="text-center fw-bold p-3">Create a Schedule!</h1>
 <div class="container p-2">
-  <!-- Row -->
-  <table id="make-schedule">
-    <tr>
-      <th class="col-1"> 
-        <div class="btn-group">
-          <button class="btn btn-secondary btn-lg dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Choose a Schedule
-          </button>
-          <ul class="dropdown-menu dropdown-menu-end">
-            <li class="list-group-item">
-              <a class="dropdown-item" href="#" onclick="selectSchedule('Schedule 1')">1</a>
-            </li>
-            <li class="list-group-item">
-              <a class="dropdown-item" href="#" onclick="selectSchedule('Schedule 2')">2</a>
-            </li>
-            <li class="list-group-item">
-              <a class="dropdown-item" href="#" onclick="selectSchedule('Schedule 3')">3</a>
-            </li>
-          </ul>
-        </div>
-      </th>
-    </tr>
-    
-    <tr>
-      <td colspan="2" style="width: 90">
+  <!-- Class searching function -->
+  <div class="row">
+    <div class="col-10">
+      <div class="input-group mb-2">
+        <span class="input-group-text" id="addon-wrapping">
+          <span class="material-symbols-outlined"> search </span>
+        </span>
+
+
         <input
           type="search"
-          class="form-control rounded"
+          class="form-control"
+          id="search-input"
           aria-label="Search"
           aria-describedby="search-addon"
           name="q"
-          placeholder="Search for courses"
+          placeholder="Software"
           hx-get="/search"
           hx-trigger="keyup changed delay:500ms"
-          hx-target="#courses"/>
-      </td>
-    </tr>
-
-    <tr>
-      <th class="col-1"> Course Prefix:</th>
-      <td class="col-2">
-        <!-- Class Scroll Container -->
-        <div class="container-fluid py-2 border border-2 border-black rounded" id="class-cards-container">
-          <!-- Class Scroll Card Container -->
-          <div class="d-flex flex-row flex-nowrap overflow-auto" id="courses">
-            <!-- Horizontal Dropdown Menu -->
-            <select multiple class="form-select horizontal-dropdown" aria-label="Select Courses">
-              <option value="ITIS" class="bg-warning text-white">ITIS</option>
-              <option value="ITCS" class="bg-danger text-white">ITCS</option>
-              <option value="MATH" class="bg-info text-white">MATH</option>
-              <option value="STAT" class="bg-danger text-white">STAT</option>
-              <option value="ENGL" class="bg-success text-white">ENGL</option>
-              <option value="ITSC" class="bg-info text-white">ITSC</option>
-              <option value="PHYS" class="bg-primary text-white">PHYS</option>
-              <option value="CHEM" class="bg-secondary text-white">CHEM</option>
-              <option value="BIOE" class="bg-dark text-white">BIOE</option>
-            </select>
-            <!-- End Horizontal Dropdown Menu -->
-          </div>
-        </div>
-      </td>
-    </tr>
-
-    <tr>
-      <th class="col-1">Course Number:</th>
-      <td class="col-2"><input type="number" min="0000" max="9999" name="course_number" title="Enter a Course # (4 Only)"></td>
-    </tr>
-    <tr>
-      <th class="col-1">Class Section:</th>
-      <td class="col-2"><input type="number" min="000" max="999" name="section"></td>
-    </tr>
-    <tr>
-      <th class="col-1">Start Time:</th>
-      <td class="col-2"><input type="time" name="start_time" required></td>
-    </tr>
-    <tr>
-      <th class="col-1">End Time:</th>
-      <td class="col-2"><input type="time" name="end_time" required></td>
-    </tr>
-    <tr>
-      <th class="col-1">Class Days:</th>
-      <td class="col-2">
-        {% from 'bootstrap5/form.html' import render_form_row %}
-        {{ render_form_row([form.days]) }}
-      </td>
-    </tr>
-    <tr>
-      <th class="col-1">Course Lab Section:</th>
-      <td class="col-2">
-          <!-- Course Lab Section Inputs -->
-          {% from 'bootstrap5/form.html' import render_form_row %}
-          {{ render_form_row([form.has_lab]) }}
-          {{ render_form_row([form.lab_day]) }}
-          {{ render_form_row([form.lab_start_time]) }}
-          {{ render_form_row([form.lab_end_time]) }}
-          <!-- End Course Lab Section Inputs -->
-      </td>
-    </tr>
-    <tr>
-      <th class="col-1"> </th>
-      <td class="col-2">
-          <!-- Submit Button -->
-          {% from 'bootstrap5/form.html' import render_form_row %}
-          {{ render_form_row([form.add_course]) }}
-          <!-- End Submit Button -->
-      </td>
-    </tr>
-  </table>
-
-  <div class="grid">
-    
-    <div class="first-col fw-bold">Monday</div>
-    <div class="first-col fw-bold">Tuesday</div>
-    <div class="first-col fw-bold">Wednesday</div>
-    <div class="first-col fw-bold">Thursday</div>
-    <div class="first-col fw-bold">Friday</div>
-    
-    <div class="first-row">Time</div>
-    <div class="first-row">8am</div>
-    <div class="first-row"></div>
-    <div class="first-row">10am</div>
-    <div class="first-row"></div>
-    <div class="first-row">12pm</div>
-    <div class="first-row"></div>
-    <div class="first-row">2pm</div>
-    <div class="first-row"></div>
-    <div class="first-row">4pm</div>
-    <div class="first-row"></div>
-    <div class="first-row">6pm</div>
+          hx-target="#courses"
+        />
+      </div>
+    </div>
+    <div class="col">
+      <button
+        type="button"
+        class="btn btn-outline-dark"
+        id="modal-toggle"
+        data-bs-toggle="modal"
+        data-bs-target="#addClassModal"
+      >
+        Add New Class
+      </button>
+    </div>
   </div>
+  <!-- Class Scroll Container -->
+  <div class="row">
+    <div
+      class="container-fluid py-2 border border-2 border-black rounded"
+      id="class-cards-container"
+    >
+      <!-- Class Scroll Card Container -->
+      <div class="d-flex flex-row flex-nowrap overflow-auto" id="courses">
+        <!-- This is where search results will be displayed -->
+      </div>
+    </div>
+    <hr />
+  </div>
+</div>
 
-  
-  <!-- Modal -->
-  <div
-    class="modal fade intro-card"
-    id="addClassModal"
-    tabindex="-1"
-    aria-labelledby="addClassModalLabel"
-    aria-hidden="true"
-  >
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="addClassModalLabel">Add A New Class</h5>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
-        </div>
-        <div class="modal-body">
-          {% from 'bootstrap5/form.html' import render_form_row %}
-          <form method="POST">
-            <!-- form row -->
-            {{ render_form_row([form.course_name]) }}
-            <!-- form row -->
-            {{ render_form_row([form.course_code, form.course_number]) }}
-            <!-- form row -->
-            {{ render_form_row([form.place]) }}
-            <!-- form row -->
-            {{ render_form_row([form.days]) }}
-            <!-- form row -->
-            {{ render_form_row([form.start_time, form.end_time]) }}
-            <!-- form row -->
-            {{ render_form_row([form.has_lab, form.lab_day]) }}
-            <!-- form row -->
-            {{ render_form_row([form.lab_start_time, form.lab_end_time]) }}
-            <!-- form row -->
-            {{ render_form_row([form.add_course]) }}
-          </form>
-        </div>
+<!-- Schedule-->
+<div class="container py-5">
+  <!-- Row for Schedules -->
+  <div class="row overflow-auto flex-nowrap">
+    {% for day in ["M", "T", "W", "R", "F"] %}
+    <div class="col-md-5 px-2 mb-4" id="{{ day }}-schedule">
+      <!-- Add the rest of your schedule content here -->
+    </div>
+    {% endfor %}
+  </div>
+</div>
+<!-- Schedule-->
+<div id="map"></div>
+<!-- Modal -->
+<div
+  class="modal fade intro-card"
+  id="addClassModal"
+  tabindex="-1"
+  aria-labelledby="addClassModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addClassModalLabel">Add A New Class</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        {% from 'bootstrap5/form.html' import render_form_row %}
+        <form method="POST">
+          <!-- form row -->
+          {{ render_form_row([form.course_name]) }}
+          <!-- form row -->
+          {{ render_form_row([form.course_code, form.course_number]) }}
+          <!-- form row -->
+          {{ render_form_row([form.place]) }}
+          <!-- form row -->
+          {{ render_form_row([form.days]) }}
+          <!-- form row -->
+          {{ render_form_row([form.start_time, form.end_time]) }}
+          <!-- form row -->
+          {{ render_form_row([form.has_lab, form.lab_day]) }}
+          <!-- form row -->
+          {{ render_form_row([form.lab_start_time, form.lab_end_time]) }}
+          <!-- form row -->
+          {{ render_form_row([form.add_course]) }}
+        </form>
+      </div>
+
 
         <div class="modal-footer">
           <button
