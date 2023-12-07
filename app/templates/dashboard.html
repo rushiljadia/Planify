@@ -40,15 +40,25 @@
   <table id="make-schedule">
     <tr>
       <th class="col-1"> 
-        <label for="select-schedule" aria-label="Third navbar example">Choose a Schedule</label>
-        <select name="schedules" id="select-schedule">
-          <li>1</li>
-          <option value="schedule-1">Schedule 1</option>
-          <option value="schedule-2">Schedule 2</option>
-          <option value="schedule-3">Schedule 3</option>
-        </select>
+        <div class="btn-group">
+          <button class="btn btn-secondary btn-lg dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Choose a Schedule
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li class="list-group-item">
+              <a class="dropdown-item" href="#" onclick="selectSchedule('Schedule 1')">1</a>
+            </li>
+            <li class="list-group-item">
+              <a class="dropdown-item" href="#" onclick="selectSchedule('Schedule 2')">2</a>
+            </li>
+            <li class="list-group-item">
+              <a class="dropdown-item" href="#" onclick="selectSchedule('Schedule 3')">3</a>
+            </li>
+          </ul>
+        </div>
       </th>
     </tr>
+    
     <tr>
       <td colspan="2" style="width: 90">
         <input
@@ -63,6 +73,7 @@
           hx-target="#courses"/>
       </td>
     </tr>
+
     <tr>
       <th class="col-1"> Class Section:</th>
       <td class="col-2">
@@ -87,13 +98,7 @@
         </div>
       </td>
     </tr>
-    
-    
-    
-    
-    
-    
-    
+
     <tr>
       <th class="col-1">Course Number:</th>
       <td class="col-2"><input type="number" min="0000" max="9999" name="course_number" title="Enter a Course # (4 Only)"></td>

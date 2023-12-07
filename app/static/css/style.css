@@ -151,5 +151,8 @@ input{
   min-width: 200px;
 }
 
-
+  .btn-secondary{
+    background-color: #A69361;
+    color: #ffffff; /* Set text color to white for better visibility */
+  }
 
