@@ -115,6 +115,13 @@
       <th class="col-1">End Time:</th>
       <td class="col-2"><input type="time" name="end_time" required></td>
     </tr>
+    <tr>
+      <th class="col-1">Class Days:</th>
+      <td class="col-2">
+        {% from 'bootstrap5/form.html' import render_form_row %}
+        {{ render_form_row([form.days]) }}
+      </td>
+    </tr>
   </table>
 
   <div class="grid">
