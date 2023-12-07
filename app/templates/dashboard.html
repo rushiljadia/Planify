@@ -115,6 +115,34 @@
       <th class="col-1">End Time:</th>
       <td class="col-2"><input type="time" name="end_time" required></td>
     </tr>
+    <tr>
+      <th class="col-1">Class Days:</th>
+      <td class="col-2">
+        {% from 'bootstrap5/form.html' import render_form_row %}
+        {{ render_form_row([form.days]) }}
+      </td>
+    </tr>
+    <tr>
+      <th class="col-1">Course Lab Section:</th>
+      <td class="col-2">
+          <!-- Course Lab Section Inputs -->
+          {% from 'bootstrap5/form.html' import render_form_row %}
+          {{ render_form_row([form.has_lab]) }}
+          {{ render_form_row([form.lab_day]) }}
+          {{ render_form_row([form.lab_start_time]) }}
+          {{ render_form_row([form.lab_end_time]) }}
+          <!-- End Course Lab Section Inputs -->
+      </td>
+    </tr>
+    <tr>
+      <th class="col-1"> </th>
+      <td class="col-2">
+          <!-- Submit Button -->
+          {% from 'bootstrap5/form.html' import render_form_row %}
+          {{ render_form_row([form.add_course]) }}
+          <!-- End Submit Button -->
+      </td>
+    </tr>
   </table>
 
   <div class="grid">
