@@ -1,5 +1,7 @@
 {{ bootstrap.load_css() }}
 <!-- Card -->
+{% if results %}
+<!---->
 {% for result in results %}
 <!-- Card Body -->
 <div
@@ -10,7 +12,9 @@
     <!-- Card Title -->
     <h5 class="card-title">{{ result.code }}</h5>
     <h6 class="card-subtitle mb-2 text-body-secondary">{{ result.name }}</h6>
-    <small class="text-muted">{{ result.place }} Time</small>
+    <small class="text-muted"
+      >{{ result.place }} | {{ result.start }} - {{ result.end }}</small
+    >
   </div>
   <!-- Card Footer with add button -->
   <div class="card-footer">
@@ -34,35 +38,9 @@
   </div>
 </div>
 {% endfor %}
+<!---->
+{% else %}
+<h4>No Classes Found</h4>
+<!---->
+{% endif %}
 <!-- Card -->
-
-<!-- Add Classes Option -->
-<div
-  class="card card-block border border-2 rounded mx-2"
-  style="min-width: 300px"
->
-  <!-- Card Body -->
-  <div class="card-body text-center">
-    <!-- Card Title -->
-    <h5 class="card-title">Add A Class</h5>
-    <!-- Card Subtitle -->
-    <h6 class="card-subtitle mb-2 text-body-secondary">
-      If you cannot find your class you can add it here
-    </h6>
-  </div>
-  <!-- Card Body -->
-  <!-- Card Footer -->
-  <div class="card-footer">
-    <button
-      type="button"
-      class="btn btn-outline-success btn-lg"
-      style="width: 100%"
-      data-bs-toggle="modal"
-      data-bs-target="#addClassModal"
-    >
-      +
-    </button>
-  </div>
-  <!-- Card Footer -->
-</div>
-<!-- Add Classes Option -->

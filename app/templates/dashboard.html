@@ -33,64 +33,76 @@
 {% endwith %}
 <!-- Message flashing-->
 
+<!-- Loading animation element -->
+<div id="loadingAnimation" class="loading-animation">
+  <!-- Add your loading animation content here, e.g., a spinner or a message -->
+  Loading...
+</div>
+
 <!-- Dahboard Page-->
 <h1 class="text-center fw-bold p-3">Create a Schedule!</h1>
 <div class="container p-2">
-  <!-- Row -->
-  <table id="make-schedule">
-    <tr>
-      <th class="col-1">
-        <label for="select-schedule">Choose a Schedule</label>
-        <select name="schedules" id="select-schedule">
-          <option value="schedule-1">Schedule 1</option>
-          <option value="schedule-2">Schedule 2</option>
-          <option value="schedule-3">Schedule 3</option>
-        </select>
-      </th>
-    </tr>
-    <tr>
-      <td colspan="2" style="width: 90">
+  <!-- Class searching function -->
+  <div class="row">
+    <div class="col-10">
+      <div class="input-group mb-2">
+        <span class="input-group-text" id="addon-wrapping">
+          <span class="material-symbols-outlined"> search </span>
+        </span>
         <input
           type="search"
-          class="form-control rounded"
+          class="form-control"
+          id="search-input"
           aria-label="Search"
           aria-describedby="search-addon"
           name="q"
-          placeholder="Search for courses"
+          placeholder="Software"
           hx-get="/search"
           hx-trigger="keyup changed delay:500ms"
           hx-target="#courses"
         />
-      </td>
-    </tr>
-    <tr>
-      <th class="col-1">Class Section:</th>
-      <td class="col-2">
-        <!-- Class Scroll Container -->
-        <div
-          class="container-fluid py-2 border border-2 border-black rounded"
-          id="class-cards-container"
-        >
-          <!-- Class Scroll Card Container -->
-          <div class="d-flex flex-row flex-nowrap overflow-auto" id="courses">
-            <!-- This is where search results will be displayed -->
-          </div>
-        </div>
-      </td>
-    </tr>
-  </table>
+      </div>
+    </div>
+    <div class="col">
+      <button
+        type="button"
+        class="btn btn-outline-dark"
+        id="modal-toggle"
+        data-bs-toggle="modal"
+        data-bs-target="#addClassModal"
+      >
+        Add New Class
+      </button>
+    </div>
+  </div>
+  <!-- Class Scroll Container -->
+  <div class="row">
+    <div
+      class="container-fluid py-2 border border-2 border-black rounded"
+      id="class-cards-container"
+    >
+      <!-- Class Scroll Card Container -->
+      <div class="d-flex flex-row flex-nowrap overflow-auto" id="courses">
+        <!-- This is where search results will be displayed -->
+      </div>
+    </div>
+    <hr />
+  </div>
 </div>
 
-<div class="container">
-  <div class="row">
-    {% for day in ["M","T","W","R","F"]%}
-    <div class="col">
-      <h3>{{ day }}</h3>
+<!-- Schedule-->
+<div class="container py-5">
+  <!-- Row for Schedules -->
+  <div class="row overflow-auto flex-nowrap">
+    {% for day in ["M", "T", "W", "R", "F"] %}
+    <div class="col-md-5 px-2 mb-4" id="{{ day }}-schedule">
+      <!-- Add the rest of your schedule content here -->
     </div>
     {% endfor %}
   </div>
 </div>
-
+<!-- Schedule-->
+<div id="map"></div>
 <!-- Modal -->
 <div
   class="modal fade intro-card"
@@ -145,5 +157,4 @@
 <!-- Scripts -->
 
 <script src="{{url_for('static', filename='js/dashboard.js')}}"></script>
-<script type="module" src="static/js/map.js"></script>
 {% endblock %}
