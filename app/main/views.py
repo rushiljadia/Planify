@@ -36,13 +36,14 @@ def dashboard():
 
 
 def get_course_info(form):
-    """Gets the course information from the course adding form
+    """Gets the course information when a user adds a clas
 
     Args:
-        form (Form): The class adding form to pull from
+        form (Form): The form used to add a course
 
     Returns:
-        dict: A dictionary structured to add to the databse
+        dict: A dictionary containing all elements relevant to the course
+        being added
     """
     # Getting the course name and formatting it to title case
     course_name = form.course_name.data.title()
@@ -99,6 +100,7 @@ def get_course_info(form):
 
 def add_course(form, course_collection):
     course_to_add = get_course_info(form)
+
     # Creating a query for an existing class to prevent duplicate
     # classes being added
     existing_class = course_collection.find_one(
@@ -109,10 +111,15 @@ def add_course(form, course_collection):
             ]
         }
     )
+
+    # If a class with the same name that occurs at the same time exists in the
+    # database, the user is notified and the course is not added
     if existing_class is not None:
         flash("That course already exists!", category="danger")
     else:
+        # Otherwise, the course is added to the database
         course_collection.insert_one(course_to_add)
+        # Notify the user that their class has been added
         flash("Class added!", category="success")
 
 
@@ -141,14 +148,23 @@ def search():
         # If no results are found, an empty list is given
         results = []
 
+    # Renders a template used by HTMX to render a dynamically updating search
     return render_template("search_results.html", results=results)
 
 
 @main.route("/add-class", methods=["POST"])
 def add_class():
+    """When a user adds a class to their schedule
+    The course information is pulled from the course card data.
+    If the course info is present in the card a database query is run
+    to attempt to find the course if the database.
+    If the course is found, its id is stored and used in the users schedule
+
+    Returns:
+        flask.Response: Message and code of the status of adding the course
+    """
     try:
         course_info = request.get_json().get("courseInfo")
-        print(course_info)
 
         if course_info:
             course_id = mongo.db.courses.find_one({"name": course_info["name"]})["_id"]
@@ -246,6 +262,15 @@ def get_schedule():
 
 @main.route("/get-course/<course_id>", methods=["GET"])
 def get_course_data(course_id):
+    """Used to get information about a course from the users schedule
+
+    Args:
+        course_id (ObjectId): The id of the course to get info about
+
+    Returns:
+        dict: A dictionary of course information if the query was successful.
+        An empty dictionary if not.
+    """
     # Fetch course information from the 'courses' collection
     # You need to replace 'courses' with the actual name of your collection
     course_data = mongo.db.courses.find_one({"_id": ObjectId(course_id)})
@@ -262,3 +287,27 @@ def get_course_data(course_id):
         }
     else:
         return {}
+
+
+@main.route("/remove-class", methods=["POST"])
+def remove_class():
+    try:
+        class_id = request.json.get("classId")
+        class_id = ObjectId(class_id)
+
+        for day, classes in current_user.schedule.items():
+            current_user.schedule[day] = [c for c in classes if c != class_id]
+
+        mongo.db.users.update_one(
+            {"name": current_user.username},
+            {"$set": {"schedule": current_user.schedule}},
+        )
+
+        return jsonify(
+            {
+                "message": "Class removed successfully",
+                "updatedUser": current_user.__dict__,
+            }
+        )
+    except Exception as e:
+        return jsonify({"message": f"Error: {str(e)}"}), 500

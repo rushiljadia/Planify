@@ -75,49 +75,42 @@ function handleAddClassClick(button) {
     });
 }
 
-// Assuming each class is represented by an element with the class name 'class-item'
-document.addEventListener("DOMContentLoaded", function () {
-  document.body.addEventListener("click", function (event) {
-    // Check if the clicked element has the class 'remove-class-btn'
-    if (event.target.classList.contains("remove-class-btn")) {
-      // Call the function to handle the remove button click
-      handleRemoveClassClick(event.target);
-    }
-  });
-});
+// Handles the removal of classes
+function removeClass(button) {
+  const classId = button.getAttribute("data-class-id");
+  console.log(classId);
+  var answer = confirm("Are You sure you would like to remove this course?");
 
-function handleRemoveClassClick(button) {
-  // Retrieve necessary information about the class
-  const courseCode = button.getAttribute("data-course-code");
-  const day = button.getAttribute("data-day");
-  const startTime = button.getAttribute("data-start-time");
-  const endTime = button.getAttribute("data-end-time");
+  if (answer) {
+    const loadingAnimation = document.getElementById("loadingAnimation");
+    loadingAnimation.style.display = "flex";
+    // Send a request to the server to remove the class
+    fetch("/remove-class", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ classId }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        // Handle the response from the server
+        console.log(data.message);
 
-  // Call a function to remove the class from the schedule
-  removeClassFromSchedule(courseCode, day, startTime, endTime);
+        // Reload the page after removing the class
+        location.reload();
 
-  // You may want to perform additional actions or update the UI here
-}
-
-function removeClassFromSchedule(courseCode, day, startTime, endTime) {
-  // Identify the HTML element representing the class based on the provided information
-  const classElementToRemove = findClassElement(courseCode, day, startTime, endTime);
-
-  // Remove the HTML element from the schedule
-  if (classElementToRemove) {
-    classElementToRemove.remove();
-    // You may also want to update your data model or make additional changes here
+        loadingAnimation.style.display = "none";
+      })
+      .catch((error) => {
+        // Handle the error
+        console.error("Error:", error);
+        // Close the loading screen in case of an error
+        loadingAnimation.style.display = "none";
+      });
+    alert("Course Removed");
   }
 }
-
-function findClassElement(courseCode, day, startTime, endTime) {
-  // Implement logic to find the HTML element based on the provided information
-  // You might use document.getElementById, document.querySelector, or other methods
-  // Adapt this based on your HTML structure
-  const selector = `.class-item[data-course-code="${courseCode}"][data-day="${day}"][data-start-time="${startTime}"][data-end-time="${endTime}"]`;
-  return document.querySelector(selector);
-}
-
 
 document.addEventListener("DOMContentLoaded", function () {
   // Add event listener to the body to catch all clicks
@@ -125,7 +118,6 @@ document.addEventListener("DOMContentLoaded", function () {
     // Check if the clicked element has the class 'add-class-btn'
     if (event.target.classList.contains("add-class-btn")) {
       // Call the function to handle the button click
-      console.log("button clicked");
       handleAddClassClick(event.target);
     }
   });
@@ -182,8 +174,6 @@ function timeStringToFloat(time) {
 }
 
 async function updateScheduleAndGeocode(data) {
-  console.log("Updating schedule with data:", data);
-
   // Day mappings
   const dayMappings = {
     M: "Monday",
@@ -238,6 +228,9 @@ async function updateScheduleAndGeocode(data) {
               <h4 class="mb-3">${classInfo.courseCode}</h4>
               <small>${classInfo.courseName}</small>
               <hr />
+              <button type="button" class="btn btn-secondary btn-sm remove-class-btn" data-bs-toggle="tooltip" data-bs-placement="right" title="Remove class" onClick="removeClass(this)" data-class-id="${classInfo._id}">
+              X
+              </button>
           `;
 
           // If there is a previous class, calculate and display distance
