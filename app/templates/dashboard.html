@@ -128,7 +128,7 @@
         {% from 'bootstrap5/form.html' import render_form_row %}
         <form method="POST">
           <!-- form row -->
-          {{ render_form_row([form.course_name](placeholder="Course Name")) }}
+          {{ render_form_row([form.course_name]) }}
           <!-- form row -->
           {{ render_form_row([form.course_code, form.course_number]) }}
           <!-- form row -->
