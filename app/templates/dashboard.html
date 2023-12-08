@@ -39,7 +39,21 @@
   Loading...
 </div>
 
-<!-- Dahboard Page-->
+<!-- Dropdown box at the top for schedule selection -->
+<div class="container mt-3">
+  <div class="dropdown">
+      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+          Schedule 1
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <li><a class="dropdown-item" href="#" onclick="updateDropdown('Schedule 1')">Schedule 1</a></li>
+          <li><a class="dropdown-item" href="#" onclick="updateDropdown('Schedule 2')">Schedule 2</a></li>
+          <li><a class="dropdown-item" href="#" onclick="updateDropdown('Schedule 3')">Schedule 3</a></li>
+      </ul>
+  </div>
+</div>
+
+<!-- Dashboard Page-->
 <h1 class="text-center fw-bold p-3">Create a Schedule!</h1>
 <div class="container p-2">
   <!-- Class searching function -->

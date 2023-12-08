@@ -75,6 +75,12 @@ function handleAddClassClick(button) {
     });
 }
 
+//Handles schedule selector
+function updateDropdown(selectedOption) {
+  // Update the button text with the selected option
+  $('#dropdownMenuButton').text(selectedOption);
+}
+
 // Handles the removal of classes
 function removeClass(button) {
   const classId = button.getAttribute("data-class-id");
