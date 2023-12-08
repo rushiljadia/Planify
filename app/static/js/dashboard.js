@@ -267,12 +267,18 @@ async function updateScheduleAndGeocode(data) {
 
             var timeInfo = "";
 
-            if (walkTime - timeDiff > 5) {
+            if (classInfo.coursePlace === sortedClasses[i - 1].coursePlace) {
+              timeInfo = "Same Place";
+              classElement.style.color = "Blue";
+            } else if (walkTime - timeDiff > 5) {
               timeInfo = "Plenty of time!";
+              classElement.style.color = "Green";
             } else if (walkTime - timeDiff <= 5 && walkTime - timeDiff > 1) {
               timeInfo = "Somewhat Risky";
+              classElement.style.color = "Purple";
             } else {
-              timeInfo = "Not Possible";
+              timeInfo = "Not Possible!";
+              classElement.style.color = "red";
             }
 
             classElement.setAttribute("data-info", `${timeInfo}`);
