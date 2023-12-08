@@ -75,6 +75,50 @@ function handleAddClassClick(button) {
     });
 }
 
+// Assuming each class is represented by an element with the class name 'class-item'
+document.addEventListener("DOMContentLoaded", function () {
+  document.body.addEventListener("click", function (event) {
+    // Check if the clicked element has the class 'remove-class-btn'
+    if (event.target.classList.contains("remove-class-btn")) {
+      // Call the function to handle the remove button click
+      handleRemoveClassClick(event.target);
+    }
+  });
+});
+
+function handleRemoveClassClick(button) {
+  // Retrieve necessary information about the class
+  const courseCode = button.getAttribute("data-course-code");
+  const day = button.getAttribute("data-day");
+  const startTime = button.getAttribute("data-start-time");
+  const endTime = button.getAttribute("data-end-time");
+
+  // Call a function to remove the class from the schedule
+  removeClassFromSchedule(courseCode, day, startTime, endTime);
+
+  // You may want to perform additional actions or update the UI here
+}
+
+function removeClassFromSchedule(courseCode, day, startTime, endTime) {
+  // Identify the HTML element representing the class based on the provided information
+  const classElementToRemove = findClassElement(courseCode, day, startTime, endTime);
+
+  // Remove the HTML element from the schedule
+  if (classElementToRemove) {
+    classElementToRemove.remove();
+    // You may also want to update your data model or make additional changes here
+  }
+}
+
+function findClassElement(courseCode, day, startTime, endTime) {
+  // Implement logic to find the HTML element based on the provided information
+  // You might use document.getElementById, document.querySelector, or other methods
+  // Adapt this based on your HTML structure
+  const selector = `.class-item[data-course-code="${courseCode}"][data-day="${day}"][data-start-time="${startTime}"][data-end-time="${endTime}"]`;
+  return document.querySelector(selector);
+}
+
+
 document.addEventListener("DOMContentLoaded", function () {
   // Add event listener to the body to catch all clicks
   document.body.addEventListener("click", function (event) {
