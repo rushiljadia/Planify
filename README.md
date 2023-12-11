@@ -3,7 +3,6 @@ Planify is an app made for students looking to optimize their schedules by givin
 ## Features
 - Students can search for courses and add them to their schedules
 - Students are easily able to tell which classes will be no problem to get to, which ones might be difficult to get to, and which ones will be impossible to get to
-- Any student can have up to three schedules that they can compare
 - If a student cannot find a class, they can add it easily
 ## Tech Stack
 
